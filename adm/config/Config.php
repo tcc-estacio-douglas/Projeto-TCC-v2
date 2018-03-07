@@ -1,6 +1,6 @@
 <?php
 session_start();
-define('URL', 'http://localhost/celke/aula39-mvc-p10/');
+define('URL', 'http://localhost/tcc-login/adm/');
 
 define('CONTROLER', 'controle-home');
 define('METODO', 'index');

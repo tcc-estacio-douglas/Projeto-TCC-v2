@@ -24,6 +24,12 @@ class ConfigView {
         endif;
     }
     
+    public function renderizarLogin() {
+        if(file_exists('views/'. $this->Nome . '.php')):
+            include 'views/'. $this->Nome. '.php';
+        endif;
+    }
+    
     public function getdados() {
         return $this->Dados;
     }
