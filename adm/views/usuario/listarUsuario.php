@@ -1,6 +1,11 @@
 <?php
 
 echo "<h1>Listar usuários</h1>";
+
+echo "<hr>ID: " . $_SESSION['id'] . "<br>";
+echo "Nome: " . $_SESSION['name'] . "<br>";
+echo "E-mail: " . $_SESSION['email'] . "<hr>";
+
 if (isset($_SESSION['msg'])):
     echo "<p>" . $_SESSION['msg'] . "</p>";
 endif;

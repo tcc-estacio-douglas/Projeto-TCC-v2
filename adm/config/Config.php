@@ -2,8 +2,8 @@
 session_start();
 define('URL', 'http://localhost/tcc-login/adm/');
 
-define('CONTROLER', 'controle-home');
-define('METODO', 'index');
+define('CONTROLER', 'controle-login');
+define('METODO', 'login');
 
 //Credenciais de acesso ao BD
 define('HOST', 'localhost');

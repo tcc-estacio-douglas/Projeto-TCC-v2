@@ -3,7 +3,7 @@
 /**
  * Descricao de ControleUsuario
  *
- * @copyright (c) 2018, Douglas Caetano Lima
+ * @copyright (c) year, Cesar Szpak - Celke
  */
 class ControleUsuario {
 

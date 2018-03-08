@@ -3,7 +3,7 @@
 /**
  * Descricao de ConfigView
  *
- * @copyright (c) 2018, Douglas Caetano Lima
+ * @copyright (c) year, Cesar Szpak - Celke
  */
 class ConfigView {
 
@@ -24,12 +24,13 @@ class ConfigView {
         endif;
     }
     
-    public function renderizarLogin() {
+    public function renderizarlogin() {
         if(file_exists('views/'. $this->Nome . '.php')):
-            include 'views/'. $this->Nome. '.php';
+            include 'views/'. $this->Nome . '.php';
         endif;
     }
-    
+
+
     public function getdados() {
         return $this->Dados;
     }

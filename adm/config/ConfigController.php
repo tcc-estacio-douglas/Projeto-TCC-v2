@@ -3,7 +3,7 @@
 /**
  * Descricao de ConfigController
  *
- * @copyright (c) 2018, Douglas Caetano Lima
+ * @copyright (c) year, Cesar Szpak - Celke
  */
 class ConfigController {
 
@@ -68,6 +68,7 @@ class ConfigController {
         //Verificar se UrlController existe com nome de classe
         if (class_exists($this->UrlController)):
             try {
+                $this->login();
                 $this->carregarMetodo();
             } catch (Exception $e) {
                 $this->UrlController = $this->slugController(CONTROLER);
@@ -95,6 +96,21 @@ class ConfigController {
             $this->UrlController = $this->slugController(CONTROLER);
             $this->UrlMetodo = $this->slugMetodo(METODO);
             $this->carregarMetodo();
+        endif;
+    }
+
+    private function login() {
+        if (!isset($_SESSION['id'])):
+            if ((($this->UrlController == 'ControleLogin') & ($this->UrlMetodo == 'login')) || ($this->UrlController == '') & ($this->UrlMetodo == '')):
+                $this->UrlController = 'ControleLogin';
+                $this->UrlMetodo = 'login';
+            else:
+                $_SESSION['msg'] = "<p style='color:red'>Necessario realizar o login para acessar a pagina</p>";
+                $this->UrlController = 'ControleLogin';
+                $this->UrlMetodo = 'login';
+            endif;
+
+
         endif;
     }
 
