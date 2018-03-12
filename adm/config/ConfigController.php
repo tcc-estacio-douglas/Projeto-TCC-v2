@@ -105,7 +105,7 @@ class ConfigController {
                 $this->UrlController = 'ControleLogin';
                 $this->UrlMetodo = 'login';
             else:
-                $_SESSION['msg'] = "<p style='color:red'>Necessario realizar o login para acessar a pagina</p>";
+                $_SESSION['msg'] = "<div class='alert alert-danger'>Necessario realizar o login para acessar a pagina</div>";
                 $this->UrlController = 'ControleLogin';
                 $this->UrlMetodo = 'login';
             endif;

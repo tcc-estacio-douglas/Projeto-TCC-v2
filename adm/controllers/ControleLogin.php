@@ -35,9 +35,9 @@ class ControleLogin {
     
     public function logout() {
         unset($_SESSION['id'], $_SESSION['name'], $_SESSION['email']);
-        $_SESSION['msg'] = "<p style='color:green'>Deslogado com sucesso</p>";
+        $_SESSION['msg'] = "<div class='alert alert-success'>Deslogado com sucesso</div>";
         $UrlDestino = URL . 'controle-login/login';
-        header("Location: $UrlDestino");
+        header("Location: $UrlDestino");        
     }
 
 }

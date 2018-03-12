@@ -16,7 +16,7 @@ class ConfigView {
     }
 
     public function renderizar() {
-        include 'views/include/menu.php';
+        //include 'views/include/menu.php';
         if (file_exists('views/' . $this->Nome . '.php')):
             include 'views/' . $this->Nome . '.php';
         else:

@@ -35,7 +35,7 @@ class ModelsLogin {
                 $this->Resultado = $Visulizar->getResultado();
             else:
                 $this->Resultado = false;
-                $this->Msg = "<p style='color:red'>Login ou senha incorreto!</p>";
+                $this->Msg = "<div class='alert alert-danger'>Login ou senha incorreto!</div>";
             endif;
         endif;
     }
@@ -46,7 +46,7 @@ class ModelsLogin {
         if (in_array('', $this->Dados)):
             $this->Dados['password'] = md5($this->Dados['password']);
             $this->Resultado = false;
-            $this->Msg = "<p style='color:red'>Login ou senha incorreto!</p>";
+            $this->Msg = "<div class='alert alert-danger'>Login ou senha incorreto!</div>";
         else:
             $this->Dados['password'] = md5($this->Dados['password']);
             $this->Resultado = true;
