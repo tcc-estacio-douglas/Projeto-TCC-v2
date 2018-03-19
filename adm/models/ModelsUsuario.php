@@ -12,6 +12,7 @@ class ModelsUsuario {
     private $Dados;
     private $Msg;
     private $RowCount;
+    private $ResultadoPaginacao;
 
     const Entity = 'users';
 
@@ -22,17 +23,25 @@ class ModelsUsuario {
     function getMsg() {
         return $this->Msg;
     }
-    
+
     function getRowCount() {
         return $this->RowCount;
     }
 
-    
-    public function listar() {
+    public function listar($PageId) {
+        $Paginacao = new ModelsPaginacao(URL . 'controle-usuario/index/');
+        $Paginacao->condicao($PageId, 3);
+        $this->ResultadoPaginacao = $Paginacao->paginacao('users');
+
         $Listar = new ModelsRead();
-        $Listar->ExeRead('users', 'LIMIT :limit', "limit=12");
-        $this->Resultado = $Listar->getResultado();
-        return $this->Resultado;
+        $Listar->ExeRead('users', 'LIMIT :limit OFFSET :offset', "limit={$Paginacao->getLimiteResultado()}&offset={$Paginacao->getOffset()}");
+        if ($Listar->getResultado()):
+            $this->Resultado = $Listar->getResultado();
+            return array($this->Resultado, $this->ResultadoPaginacao);
+        else:
+            //echo "nenhum usuario encontrado<br>";
+            $Paginacao->paginaInvalida();
+        endif;
     }
 
     public function visualizar($UserId) {
@@ -57,7 +66,8 @@ class ModelsUsuario {
         $this->Dados = array_map('trim', $this->Dados);
         if (in_array('', $this->Dados)):
             $this->Resultado = false;
-            $this->Msg = "<p style='color:red'><b>Erro ao cadastrar: </b>Para cadastrar o usuário preencha todos os campos!</p>";
+            $this->Msg = "<div class='alert alert-danger'><b>Erro ao cadastrar: </b>Para cadastrar o usuário preencha todos os campos!</div>";
+
         else:
             $this->Dados['password'] = md5($this->Dados['password']);
             $this->Resultado = true;
@@ -69,7 +79,8 @@ class ModelsUsuario {
         $Create->ExeCreate(self::Entity, $this->Dados);
         if ($Create->getResultado()):
             $this->Resultado = $Create->getResultado();
-            $this->Msg = "<p style='color:green'><b>Sucesso: </b>O usuário {$this->Dados['name']} foi cadastrado com sucesso!</p>";
+            $this->Msg = "<div class='alert alert-success'><b>Sucesso: </b>O usuário <b>{$this->Dados['name']}</b> foi cadastrado com sucesso!</div>";
+
         endif;
     }
 
@@ -82,30 +93,30 @@ class ModelsUsuario {
             $this->alterar();
         endif;
     }
-    
+
     private function alterar() {
         $Update = new ModelsUpdate();
         $Update->ExeUpdate(self::Entity, $this->Dados, "WHERE id = :id", "id={$this->UserId }");
         if ($Update->getResultado()):
-            $this->Msg = "<p style='color: green';><b>Sucesso: </b> O usuário {$this->Dados['name']} foi editado no sistema!</p>";
+            $this->Msg = "<div class='alert alert-success'><b>Sucesso: </b> O usuário {$this->Dados['name']} foi editado no sistema!</div>";
             $this->Resultado = true;
         else:
-            $this->Msg = "<p style='color: red';><b>Erro: </b> O usuário {$this->Dados['name']} não foi editado no sistema!</p>";
+            $this->Msg = "<div class='alert alert-danger'><b>Erro: </b> O usuário {$this->Dados['name']} não foi editado no sistema!</div>";
             $this->Resultado = false;
         endif;
     }
-    
+
     public function apagar($UserId) {
         $this->Dados = $this->visualizar($UserId);
-        var_dump($this->Dados);        
-        if($this->getRowCount() > 0):
+        var_dump($this->Dados);
+        if ($this->getRowCount() > 0):
             echo "O usuario existe: {$this->getRowCount()}<br>";
             $ApagarUsuario = new ModelsDelete();
             $ApagarUsuario->ExeDelete('users', 'WHERE id = :id', "id=$UserId");
             $this->Resultado = $ApagarUsuario->getResultado();
-            $_SESSION['msg'] =  "Usuário apagado com sucesso.<br>";
+            $_SESSION['msg'] = "<div class='alert alert-success'>Usuário apagado com sucesso.</div>";
         else:
-            $_SESSION['msg'] =  "Não foi encontrado o usuário.<br>";
+            $_SESSION['msg'] = "<div class='alert alert-danger'>Usuário não encontrado.</div>";
         endif;
     }
 

@@ -9,10 +9,14 @@ class ControleUsuario {
 
     private $Dados;
     private $UserId;
+    private $PageId;
 
-    public function index() {
+    public function index($PageId = null) {
+        $this->PageId = ((int) $PageId ? $PageId : 1);
+        //echo "numero da pagina é {$this->PageId}<br>";
+        
         $ListarUsuarios = new ModelsUsuario();
-        $this->Dados = $ListarUsuarios->listar();
+        $this->Dados = $ListarUsuarios->listar($this->PageId);
         $CarregarView = new ConfigView("usuario/listarUsuario", $this->Dados);
         $CarregarView->renderizar();
     }
@@ -25,9 +29,9 @@ class ControleUsuario {
             $CadUsuario = new ModelsUsuario();
             $CadUsuario->cadastrar($Dados);
             if (!$CadUsuario->getResultado()):
-                $Dados['msg'] = $CadUsuario->getMsg();
+               $_SESSION['msg'] = $CadUsuario->getMsg();
             else:
-                $Dados['msg'] = $CadUsuario->getMsg();
+                $_SESSION['msg'] = $CadUsuario->getMsg();
                 $UrlDestino = URL . 'controle-usuario/index';
                 header("Location: $UrlDestino");
             endif;
@@ -59,10 +63,11 @@ class ControleUsuario {
         if (!empty($this->UserId)):
             $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
             $this->alterar();
+            $_SESSION['msg'] = "<div class='alert alert-success'>Usuário editado com sucesso!</div>";
             $CarregarView = new ConfigView("usuario/editarUsuario", $this->Dados);
             $CarregarView->renderizar();
         else:
-            $_SESSION['msg'] = "Necessário selecionar um usuário<br>";
+            $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário selecionar um usuário</div>";
             $UrlDestino = URL . 'controle-usuario/index';
             header("Location: $UrlDestino");
         endif;
@@ -84,7 +89,7 @@ class ControleUsuario {
             $VerUsuario = new ModelsUsuario();
             $this->Dados = $VerUsuario->visualizar($this->UserId);
             if($VerUsuario->getRowCount() <= 0):
-                $_SESSION['msg'] = "Necessário selecionar um usuário<br>";
+                $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário selecionar um usuário</div>";
                 $UrlDestino = URL . 'controle-usuario/index';
                 header("Location: $UrlDestino");
             endif;
@@ -99,7 +104,7 @@ class ControleUsuario {
             $ApagarUsuario = new ModelsUsuario();
             $ApagarUsuario->apagar($this->UserId);
         else:
-            $_SESSION['msg'] = "Necessário selecionar um usuário<br>";
+            $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário selecionar um usuário</div>";
         endif;
 
         $UrlDestino = URL . 'controle-usuario/index';
