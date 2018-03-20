@@ -40,3 +40,8 @@
 @media screen and (max-width: 767px){
     .row.content{height: auto;}
 }
+
+.well-personalizado{
+    padding-top: 0px;
+    padding-bottom: 40px;
+}

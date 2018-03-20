@@ -15,7 +15,7 @@ class ControleLogin {
             unset($this->Dados['SendLogin']);
             $Login = new ModelsLogin();
             $Login->logar($this->Dados);
-            if(!$Login->getResultado()):
+            if (!$Login->getResultado()):
                 $_SESSION['msg'] = $Login->getMsg();
             else:
                 $this->Dados = $Login->getResultado();
@@ -32,12 +32,22 @@ class ControleLogin {
         $CarregarView = new ConfigView("login/login", $this->Dados);
         $CarregarView->renderizarlogin();
     }
-    
+
     public function logout() {
         unset($_SESSION['id'], $_SESSION['name'], $_SESSION['email']);
         $_SESSION['msg'] = "<div class='alert alert-success'>Deslogado com sucesso</div>";
         $UrlDestino = URL . 'controle-login/login';
-        header("Location: $UrlDestino");        
+        header("Location: $UrlDestino");
+    }
+
+    public function listarClasseMethodo() {
+        $CarregarView = new ConfigView("login/listarClasseMethodo");
+        $CarregarView->renderizar();
+    }
+
+    public function cadastrarClasse() {
+        $CadClasse = new ModelsLogin();
+        $CadClasse->cadastrarClasse();
     }
 
 }

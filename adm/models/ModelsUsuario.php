@@ -39,7 +39,7 @@ class ModelsUsuario {
             $this->Resultado = $Listar->getResultado();
             return array($this->Resultado, $this->ResultadoPaginacao);
         else:
-            //echo "nenhum usuario encontrado<br>";
+            //echo "Nenhum usuário encontrado<br>";
             $Paginacao->paginaInvalida();
         endif;
     }
@@ -67,7 +67,6 @@ class ModelsUsuario {
         if (in_array('', $this->Dados)):
             $this->Resultado = false;
             $this->Msg = "<div class='alert alert-danger'><b>Erro ao cadastrar: </b>Para cadastrar o usuário preencha todos os campos!</div>";
-
         else:
             $this->Dados['password'] = md5($this->Dados['password']);
             $this->Resultado = true;
@@ -79,8 +78,7 @@ class ModelsUsuario {
         $Create->ExeCreate(self::Entity, $this->Dados);
         if ($Create->getResultado()):
             $this->Resultado = $Create->getResultado();
-            $this->Msg = "<div class='alert alert-success'><b>Sucesso: </b>O usuário <b>{$this->Dados['name']}</b> foi cadastrado com sucesso!</div>";
-
+            $this->Msg = "<div class='alert alert-success'><b>Sucesso: </b>O usuário {$this->Dados['name']} foi cadastrado com sucesso!</div>";
         endif;
     }
 
@@ -98,10 +96,10 @@ class ModelsUsuario {
         $Update = new ModelsUpdate();
         $Update->ExeUpdate(self::Entity, $this->Dados, "WHERE id = :id", "id={$this->UserId }");
         if ($Update->getResultado()):
-            $this->Msg = "<div class='alert alert-success'><b>Sucesso: </b> O usuário {$this->Dados['name']} foi editado no sistema!</div>";
+            $this->Msg = "<div class='alert alert-success'><b>Sucesso: </b>O usuário {$this->Dados['name']} foi editado no sistema!</div>";
             $this->Resultado = true;
         else:
-            $this->Msg = "<div class='alert alert-danger'><b>Erro: </b> O usuário {$this->Dados['name']} não foi editado no sistema!</div>";
+            $this->Msg = "<div class='alert alert-danger'><b>Erro: </b>O usuário {$this->Dados['name']} não foi editado no sistema!</div>";
             $this->Resultado = false;
         endif;
     }
@@ -116,7 +114,7 @@ class ModelsUsuario {
             $this->Resultado = $ApagarUsuario->getResultado();
             $_SESSION['msg'] = "<div class='alert alert-success'>Usuário apagado com sucesso.</div>";
         else:
-            $_SESSION['msg'] = "<div class='alert alert-danger'>Usuário não encontrado.</div>";
+            $_SESSION['msg'] = "<div class='alert alert-danger'>Não foi encontrado o usuário.</div>";
         endif;
     }
 

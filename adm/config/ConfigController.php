@@ -101,16 +101,14 @@ class ConfigController {
 
     private function login() {
         if (!isset($_SESSION['id'])):
-            if ((($this->UrlController == 'ControleLogin') & ($this->UrlMetodo == 'login')) || ($this->UrlController == '') & ($this->UrlMetodo == '')):
+            if((($this->UrlController == 'ControleLogin') & ($this->UrlMetodo == 'login')) || (($this->UrlController == '') & ($this->UrlMetodo == ''))):
                 $this->UrlController = 'ControleLogin';
                 $this->UrlMetodo = 'login';
-            else:
-                $_SESSION['msg'] = "<div class='alert alert-danger'>Necessario realizar o login para acessar a pagina</div>";
+            else:                
+                $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário realizar o login para acessar a página.</div>";
                 $this->UrlController = 'ControleLogin';
                 $this->UrlMetodo = 'login';
-            endif;
-
-
+            endif;    
         endif;
     }
 

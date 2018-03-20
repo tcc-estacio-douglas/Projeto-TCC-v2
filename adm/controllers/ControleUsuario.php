@@ -13,7 +13,7 @@ class ControleUsuario {
 
     public function index($PageId = null) {
         $this->PageId = ((int) $PageId ? $PageId : 1);
-        //echo "numero da pagina é {$this->PageId}<br>";
+        //echo "Número da página: {$this->PageId}<br>";
         
         $ListarUsuarios = new ModelsUsuario();
         $this->Dados = $ListarUsuarios->listar($this->PageId);
@@ -29,9 +29,9 @@ class ControleUsuario {
             $CadUsuario = new ModelsUsuario();
             $CadUsuario->cadastrar($Dados);
             if (!$CadUsuario->getResultado()):
-               $_SESSION['msg'] = $CadUsuario->getMsg();
-            else:
                 $_SESSION['msg'] = $CadUsuario->getMsg();
+            else:
+                $_SESSION['msgcad'] = "<div class='alert alert-success'>Usuário cadastrado com sucesso!</div>";
                 $UrlDestino = URL . 'controle-usuario/index';
                 header("Location: $UrlDestino");
             endif;
@@ -62,18 +62,18 @@ class ControleUsuario {
         $this->UserId = (int) $UserId;
         if (!empty($this->UserId)):
             $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-            $this->alterar();
-            $_SESSION['msg'] = "<div class='alert alert-success'>Usuário editado com sucesso!</div>";
+            $this->alterarPrivado();
+            $_SESSION['msg'] = "<div class='alert alert-success'>Usuário editado com sucesso</div>";
             $CarregarView = new ConfigView("usuario/editarUsuario", $this->Dados);
             $CarregarView->renderizar();
-        else:
+        else: 
             $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário selecionar um usuário</div>";
             $UrlDestino = URL . 'controle-usuario/index';
             header("Location: $UrlDestino");
         endif;
     }
 
-    private function alterar() {
+    private function alterarPrivado() {
         if (!empty($this->Dados['SendEditUsuario'])):
             unset($this->Dados['SendEditUsuario']);
             $EditaUsuario = new ModelsUsuario();

@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Descrição de ModelsPaginacao
+ * Descricao de ModelsPaginacao
  *
- * @copyright (c) 2018, Douglas Caetano Lima
+ * @copyright (c) year, Cesar Szpak - Celke
  */
 class ModelsPaginacao {
 
     private $Link;
-    private $MaxLink;
+    private $MaxLinks;
     private $Pagina;
     private $LimiteResultado;
     private $Offset;
@@ -33,21 +33,20 @@ class ModelsPaginacao {
     function getResultadoPaginacao() {
         return $this->ResultadoPaginacao;
     }
-    
+
     function __construct($Link) {
         $this->Link = $Link;
-        $this->MaxLink = 2;
-        //echo "link {$this->Link}<br>";
+        $this->MaxLinks = 2;
+        //echo "Link da página {$this->Link}<br>";
     }
 
     public function condicao($Pagina, $LimiteResultado) {
         $this->Pagina = ((int) $Pagina ? $Pagina : 1);
         $this->LimiteResultado = (int) $LimiteResultado;
-        $this->Offset = ($this->Pagina) * ($this->LimiteResultado) - $this->LimiteResultado;
-        
-//        echo "pagina atual {$this->Pagina}<br>";
-//        echo "limite {$this->LimiteResultado}<br>";
-//        echo "offset {$this->Offset}<br>";
+        $this->Offset = ($this->Pagina * $this->LimiteResultado) - $this->LimiteResultado;
+//        echo "Pagina Atual {$this->Pagina}<br>";
+//        echo "Limite de resultado {$this->LimiteResultado}<br>";
+//        echo "Offset {$this->Offset}<br>";
     }
     
     public function paginaInvalida() {
@@ -58,21 +57,21 @@ class ModelsPaginacao {
         $this->Tabela = (string) $Tabela;
         $this->Termos = (string) $Termos;
         $this->ParseString = (string) $ParseString;
-        $this->instrucao();
+        $this->intrucao();
         return $this->ResultadoPaginacao;
     }
 
-    // responsavl por criar a paginacao
-    private function instrucao() {
+    //criar a  paginacao de resultado
+    private function intrucao() {
         $Listar = new ModelsRead();
         $Listar->ExeRead($this->Tabela, $this->Termos, $this->ParseString);
         $this->Rows = $Listar->getRowCount();
         if ($this->Rows > $this->LimiteResultado):
-            $this->instrucaoPaginacao();
+            $this->intrucaoPaginacao();
         endif;
     }
 
-    private function instrucaoPaginacao() {
+    private function intrucaoPaginacao() {
         //echo "Quantidade de linhas {$this->Rows}<br>";
         $Paginas = ceil($this->Rows / $this->LimiteResultado);
         
@@ -82,7 +81,7 @@ class ModelsPaginacao {
         $this->ResultadoPaginacao .= "<ul class='pagination'>";
         $this->ResultadoPaginacao .= "<li><a href=\"{$this->Link}1\">Primeira</a></li>";
         
-        for($iPag = $this->Pagina - $this->MaxLink; $iPag <= $this->Pagina - 1 ; $iPag ++):
+        for($iPag = $this->Pagina - $this->MaxLinks; $iPag <= $this->Pagina - 1 ; $iPag ++):
             if($iPag >= 1):
                 $this->ResultadoPaginacao .= "<li><a href=\"{$this->Link}{$iPag}\">{$iPag}</a></li>";
             endif;
@@ -90,7 +89,7 @@ class ModelsPaginacao {
             
         $this->ResultadoPaginacao .= "<li class='active'><a href=\"#\">{$this->Pagina}</a></li>";
         
-        for($dPag = $this->Pagina + 1; $dPag <= $this->Pagina + $this->MaxLink; $dPag ++):
+        for($dPag = $this->Pagina + 1; $dPag <= $this->Pagina + $this->MaxLinks; $dPag ++):
             if($dPag <= $Paginas):
                 $this->ResultadoPaginacao .= "<li><a href=\"{$this->Link}{$dPag}\">{$dPag}</a></li>";
             endif;
@@ -104,9 +103,10 @@ class ModelsPaginacao {
     
     private function validaQntLink($Paginas) {
         if(($this->Pagina == 1) || ($this->Pagina == $Paginas)):
-            $this->MaxLink = 4;
+            $this->MaxLinks = 4;
         elseif(($this->Pagina == 2) || ($this->Pagina == $Paginas - 1)):
-            $this->MaxLink = 3;
+            $this->MaxLinks = 3;
         endif;
     }
+
 }
