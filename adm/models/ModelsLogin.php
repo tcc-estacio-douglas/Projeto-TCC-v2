@@ -29,6 +29,20 @@ class ModelsLogin {
     function getRowCount() {
         return $this->RowCount;
     }
+    
+    public function listar() {
+        $Listar = new ModelsRead();
+        $Listar->fullRead("select per.*, cla.nome_classe classes, met.nome_method methodos, niv.nome_niveis_acesso niveis_acessos
+                from permissoes per
+                INNER JOIN classes cla on cla.id = per.classe_id
+                INNER JOIN methodos met on met.id = per.methodo_id
+                INNER JOIN niveis_acessos niv on niv.id = per.niveis_acesso_id
+                ORDER BY met.id ASC");
+        
+        $this->Resultado = $Listar->getResultado();
+        //var_dump($this->Resultado);
+                
+    }
 
     public function logar(array $Dados) {
         $this->Dados = $Dados;

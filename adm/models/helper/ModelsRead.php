@@ -22,6 +22,14 @@ class ModelsRead extends ModelsConn {
         $this->Select = "SELECT * FROM {$Tabela} {$Termos}";
         $this->ExecutarInstrucao();
     }
+    
+    public function fullRead($Query, $ParseString = null) {
+        $this->Select = (string) $Query;
+        if(!empty($ParseString)):
+            parse_str($ParseString, $this->Values);
+        endif;
+        $this->ExecutarInstrucao();
+    }
 
     public function getResultado() {
         return $this->Resultado;

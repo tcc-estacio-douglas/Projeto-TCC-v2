@@ -41,6 +41,8 @@ class ControleLogin {
     }
 
     public function listarClasseMethodo() {
+        $Listar = new ModelsLogin();
+        $Listar->listar();
         $CarregarView = new ConfigView("login/listarClasseMethodo");
         $CarregarView->renderizar();
     }
