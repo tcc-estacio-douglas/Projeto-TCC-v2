@@ -29,19 +29,32 @@ class ModelsLogin {
     function getRowCount() {
         return $this->RowCount;
     }
-    
-    public function listar() {
+
+    public function listar($MethodoId = null) {
+        $this->IdMethod = (int) $MethodoId;
+
         $Listar = new ModelsRead();
-        $Listar->fullRead("select per.*, cla.nome_classe classes, met.nome_method methodos, niv.nome_niveis_acesso niveis_acessos
+        if (!empty($this->IdMethod)):
+            $Listar->fullRead("select per.*, cla.nome_classe classes, met.nome_method methodos, niv.nome_niveis_acesso niveis_acessos
                 from permissoes per
                 INNER JOIN classes cla on cla.id = per.classe_id
                 INNER JOIN methodos met on met.id = per.methodo_id
                 INNER JOIN niveis_acessos niv on niv.id = per.niveis_acesso_id
-                ORDER BY met.id ASC");
-        
+                WHERE per.methodo_id =:id_define_met
+                ORDER BY met.id ASC, niv.id ASC", "id_define_met={$this->IdMethod}");
+        else:
+            $Listar->fullRead("select per.*, cla.nome_classe classes, met.nome_method methodos, niv.nome_niveis_acesso niveis_acessos
+                from permissoes per
+                INNER JOIN classes cla on cla.id = per.classe_id
+                INNER JOIN methodos met on met.id = per.methodo_id
+                INNER JOIN niveis_acessos niv on niv.id = per.niveis_acesso_id
+                ORDER BY met.id ASC, niv.id ASC");
+        endif;
+
+
         $this->Resultado = $Listar->getResultado();
         //var_dump($this->Resultado);
-                
+        return $this->Resultado;
     }
 
     public function logar(array $Dados) {
@@ -185,7 +198,7 @@ class ModelsLogin {
             //echo "Nivel de acesso: $id <br>";
             if ($id == 1):
                 $ValorSituacaoPermissao = 1;
-            else:                
+            else:
                 $ValorSituacaoPermissao = 2;
             endif;
 
@@ -209,6 +222,23 @@ class ModelsLogin {
             $this->Resultado = $Create->getResultado();
             echo "Permissão cadastrada <br>";
         endif;
+    }
+
+    public function editarPermissoes($MethodId, array $Dados) {
+        $this->IdMethod = (int) $MethodId;
+        $this->Dados = $Dados;
+        foreach ($this->Dados['nome'] as $id => $permissao):
+            $situacao_permissao = $permissao;
+            $id_permissao = $id;
+            $this->Methodos = array('situacao_permissao' => $situacao_permissao);
+            $Update = new ModelsUpdate;
+            $Update->ExeUpdate('permissoes', $this->Methodos, "WHERE id =:id", "id={$id_permissao}");
+            if ($Update->getResultado()):
+                $this->Resultado = true;
+            else:
+                $this->Resultado = false;
+            endif;
+        endforeach;
     }
 
 }
