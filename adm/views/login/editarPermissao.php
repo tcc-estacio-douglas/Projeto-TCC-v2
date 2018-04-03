@@ -20,19 +20,24 @@
                     <label class="col-sm-2 control-label"><?php echo $niveis_acessos; ?>:</label>
                     <div class="col-sm-10">
                         <?php
-                        if ($situacao_permissao == 1) {
-                            echo "<label class='radio-inline'>
-       <input type='radio' name='nome[$id]' value='1' checked><span class='label label-success'>Liberado</span></label>";
-                            echo "<label class='radio-inline'>
-       <input type='radio' name='nome[$id]' value='2'><span class='label label-danger'>Bloqueado</span></label>";
-                        } else {
-
-                            echo "<label class='radio-inline'>
-       <input type='radio' name='nome[$id]' value='1'><span class='label label-success'>Liberado</span></label>";
-                            echo "<label class='radio-inline'>
-       <input type='radio' name='nome[$id]' value='2' checked><span class='label label-danger'>Bloqueado</span></label>";
-                        }
-                        ?> 
+                        if ($niveis_acesso_id == 1):
+                            if ($situacao_permissao == 1) :
+                                echo "<label class='radio-inline'><input type='radio' name='nome[$id]' value='1' checked disabled><span class='label label-success'>Liberado</span></label>";
+                                echo "<label class='radio-inline'><input type='radio' name='nome[$id]' value='2' disabled><span class='label label-danger'>Bloqueado</span></label>";
+                            else:
+                                echo "<label class='radio-inline'><input type='radio' name='nome[$id]' value='1' disabled><span class='label label-success'>Liberado</span></label>";
+                                echo "<label class='radio-inline'><input type='radio' name='nome[$id]' value='2' checked disabled><span class='label label-danger'>Bloqueado</span></label>";
+                            endif;
+                        else:
+                            if ($situacao_permissao == 1) :
+                                echo "<label class='radio-inline'><input type='radio' name='nome[$id]' value='1' checked><span class='label label-success'>Liberado</span></label>";
+                                echo "<label class='radio-inline'><input type='radio' name='nome[$id]' value='2'><span class='label label-danger'>Bloqueado</span></label>";
+                            else:
+                                echo "<label class='radio-inline'><input type='radio' name='nome[$id]' value='1'><span class='label label-success'>Liberado</span></label>";
+                                echo "<label class='radio-inline'><input type='radio' name='nome[$id]' value='2' checked><span class='label label-danger'>Bloqueado</span></label>";
+                            endif;
+                        endif;
+                        ?>
                     </div>
                 </div>
                 <?php
@@ -42,12 +47,13 @@
                 <div class="col-sm-offset-2 col-sm-10">
                     <input type="submit" class="btn btn-warning" value="Editar" name="SendEditPermissao">
                 </div>
+            </div>
         </form>
 
         <?php
     endif;
 
-    var_dump($this->Dados);
+    //var_dump($this->Dados);
     ?>
 
 </div>

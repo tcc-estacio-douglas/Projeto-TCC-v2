@@ -30,7 +30,7 @@ class ModelsUsuario {
 
     public function listar($PageId) {
         $Paginacao = new ModelsPaginacao(URL . 'controle-usuario/index/');
-        $Paginacao->condicao($PageId, 3);
+        $Paginacao->condicao($PageId, 10);
         $this->ResultadoPaginacao = $Paginacao->paginacao('users');
 
         $Listar = new ModelsRead();
@@ -61,12 +61,23 @@ class ModelsUsuario {
         endif;
     }
 
+    public function listarCadastrar() {
+        $Listar = new ModelsRead();
+        $Listar->ExeRead('niveis_acessos');
+        $NivelAcesso = $Listar->getResultado();
+        //var_dump($NivelAcesso);
+        $Listar->ExeRead('situacoes_users');
+        $SituacaoUsers = $Listar->getResultado();
+        //var_dump($SituacaoUsers);
+        $this->Resultado = array($NivelAcesso, $SituacaoUsers);
+        //var_dump($this->Resultado);
+        return $this->Resultado;
+    }
     private function validarDados() {
         $this->Dados = array_map('strip_tags', $this->Dados);
         $this->Dados = array_map('trim', $this->Dados);
         if (in_array('', $this->Dados)):
             $this->Resultado = false;
-            $this->Msg = "<div class='alert alert-danger'><b>Erro ao cadastrar: </b>Para cadastrar o usuário preencha todos os campos!</div>";
         else:
             $this->Dados['password'] = md5($this->Dados['password']);
             $this->Resultado = true;
@@ -78,7 +89,6 @@ class ModelsUsuario {
         $Create->ExeCreate(self::Entity, $this->Dados);
         if ($Create->getResultado()):
             $this->Resultado = $Create->getResultado();
-            $this->Msg = "<div class='alert alert-success'><b>Sucesso: </b>O usuário {$this->Dados['name']} foi cadastrado com sucesso!</div>";
         endif;
     }
 

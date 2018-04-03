@@ -108,7 +108,20 @@ class ConfigController {
                 $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário realizar o login para acessar a página.</div>";
                 $this->UrlController = 'ControleLogin';
                 $this->UrlMetodo = 'login';
-            endif;    
+            endif;  
+            
+        else:
+            //echo "Classe: {$this->UrlController}<br>";
+            //echo "Método: {$this->UrlMetodo}<br>";
+            //echo "Nivel de acesso: ".$_SESSION['niveis_acesso_id']."<br>";
+            
+            $VerPemitirAcesso = new ModelsLogin();
+            $VerPemitirAcesso->permitirAcesso($this->UrlController, $this->UrlMetodo);
+            if(!$VerPemitirAcesso->getResultado()):
+                $_SESSION['msg'] = "<div class='alert alert-danger'>Página restrita.</div>";
+                $this->UrlController = 'ControleLogin';
+                $this->UrlMetodo = 'login';
+            endif;
         endif;
     }
 

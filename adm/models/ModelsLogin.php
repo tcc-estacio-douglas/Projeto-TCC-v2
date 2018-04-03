@@ -33,26 +33,31 @@ class ModelsLogin {
     public function listar($MethodoId = null) {
         $this->IdMethod = (int) $MethodoId;
 
-        $Listar = new ModelsRead();
+        $Listar = new ModelsRead;
         if (!empty($this->IdMethod)):
             $Listar->fullRead("select per.*, cla.nome_classe classes, met.nome_method methodos, niv.nome_niveis_acesso niveis_acessos
-                from permissoes per
-                INNER JOIN classes cla on cla.id = per.classe_id
-                INNER JOIN methodos met on met.id = per.methodo_id
-                INNER JOIN niveis_acessos niv on niv.id = per.niveis_acesso_id
-                WHERE per.methodo_id =:id_define_met
-                ORDER BY met.id ASC, niv.id ASC", "id_define_met={$this->IdMethod}");
+            from permissoes per
+            INNER JOIN classes cla on cla.id = per.classe_id
+            INNER JOIN methodos met on met.id = per.methodo_id
+            INNER JOIN niveis_acessos niv on niv.id = per.niveis_acesso_id
+            WHERE per.methodo_id =:id_define_met
+            ORDER BY met.id ASC, niv.id ASC", "id_define_met={$this->IdMethod}");
+            $this->Resultado = $Listar->getResultado();
         else:
             $Listar->fullRead("select per.*, cla.nome_classe classes, met.nome_method methodos, niv.nome_niveis_acesso niveis_acessos
-                from permissoes per
-                INNER JOIN classes cla on cla.id = per.classe_id
-                INNER JOIN methodos met on met.id = per.methodo_id
-                INNER JOIN niveis_acessos niv on niv.id = per.niveis_acesso_id
-                ORDER BY met.id ASC, niv.id ASC");
+            from permissoes per
+            INNER JOIN classes cla on cla.id = per.classe_id
+            INNER JOIN methodos met on met.id = per.methodo_id
+            INNER JOIN niveis_acessos niv on niv.id = per.niveis_acesso_id
+            ORDER BY met.id ASC, niv.id ASC");
+
+            $ListarNiveisAcesso = new ModelsRead();
+            $ListarNiveisAcesso->ExeRead('niveis_acessos');
+
+            $this->Resultado = array($Listar->getResultado(), $ListarNiveisAcesso->getResultado());
+
         endif;
 
-
-        $this->Resultado = $Listar->getResultado();
         //var_dump($this->Resultado);
         return $this->Resultado;
     }
@@ -178,7 +183,7 @@ class ModelsLogin {
         $this->Dados = $Dados;
         //var_dump($this->Dados);
         $Visualizar = new ModelsRead();
-        $Visualizar->ExeRead("methodos", "WHERE nome_method = :pesquisa AND classe_id =:classe_id LIMIT :limit", "pesquisa={$this->Dados['nome_method']}&classe_id={$this->IdClasse}&limit=1");
+        $Visualizar->ExeRead("methodos", "WHERE nome_method = :pesquisa AND classe_id = :classe_id LIMIT :limit", "pesquisa={$this->Dados['nome_method']}&classe_id={$this->IdClasse}&limit=1");
         $this->Resultado = $Visualizar->getResultado();
     }
 
@@ -203,7 +208,7 @@ class ModelsLogin {
             endif;
 
             $Visualizar = new ModelsRead();
-            $Visualizar->ExeRead('permissoes', "WHERE classe_id =:classe_id AND methodo_id =:methodo_id AND niveis_acesso_id =:niveis_acesso_id LIMIT :limit", "classe_id={$this->IdClasse}&methodo_id={$this->IdMethod}&niveis_acesso_id=$id&limit=1");
+            $Visualizar->ExeRead('permissoes', "WHERE classe_id = :classe_id AND methodo_id = :methodo_id AND niveis_acesso_id = :niveis_acesso_id LIMIT :limit", "classe_id={$this->IdClasse}&methodo_id={$this->IdMethod}&niveis_acesso_id=$id&limit=1");
             $this->Resultado = $Visualizar->getResultado();
             //var_dump($this->Resultado);
             if ($Visualizar->getResultado()):
@@ -227,11 +232,11 @@ class ModelsLogin {
     public function editarPermissoes($MethodId, array $Dados) {
         $this->IdMethod = (int) $MethodId;
         $this->Dados = $Dados;
-        foreach ($this->Dados['nome'] as $id => $permissao):
+        foreach ($this->Dados['nome'] as $id => $permissao) :
             $situacao_permissao = $permissao;
             $id_permissao = $id;
             $this->Methodos = array('situacao_permissao' => $situacao_permissao);
-            $Update = new ModelsUpdate;
+            $Update = new ModelsUpdate();
             $Update->ExeUpdate('permissoes', $this->Methodos, "WHERE id =:id", "id={$id_permissao}");
             if ($Update->getResultado()):
                 $this->Resultado = true;
@@ -239,6 +244,34 @@ class ModelsLogin {
                 $this->Resultado = false;
             endif;
         endforeach;
+    }
+
+    public function permitirAcesso($Classe, $Metodo) {
+        $this->Classe = (string) $Classe;
+        $this->Methodos = (string) $Metodo;
+        $niveis_acesso_id = $_SESSION['niveis_acesso_id'];
+        if ($niveis_acesso_id == 1):
+            $this->Resultado = true;
+        else:
+            $Listar = new ModelsRead();
+            $Listar->fullRead("select per.*, cla.nome_classe classes, met.nome_method methodos, niv.nome_niveis_acesso niveis_acessos
+            from permissoes per
+            INNER JOIN classes cla on cla.id = per.classe_id
+            INNER JOIN methodos met on met.id = per.methodo_id
+            INNER JOIN niveis_acessos niv on niv.id = per.niveis_acesso_id
+            WHERE cla.nome_classe =:nome_classe AND met.nome_method =:nome_method AND per.niveis_acesso_id =:niveis_acesso_id AND per.situacao_permissao =:situacao_permissao
+            LIMIT :limit", "nome_classe={$this->Classe}&nome_method={$this->Methodos}&niveis_acesso_id=$niveis_acesso_id&situacao_permissao=1&limit=1");
+
+            $this->Resultado = $Listar->getResultado();
+            //var_dump($this->Resultado);
+            if ($Listar->getResultado()):
+                //echo "Acesso Liberado <br>";
+                $this->Resultado = true;
+            else:
+                //echo "Acesso Bloqueado <br>";
+                $this->Resultado = false;
+            endif;
+        endif;
     }
 
 }

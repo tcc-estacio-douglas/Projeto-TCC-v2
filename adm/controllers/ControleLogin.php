@@ -23,6 +23,7 @@ class ControleLogin {
                 $_SESSION['id'] = $this->Dados[0]['id'];
                 $_SESSION['name'] = $this->Dados[0]['name'];
                 $_SESSION['email'] = $this->Dados[0]['email'];
+                $_SESSION['niveis_acesso_id'] = $this->Dados[0]['niveis_acesso_id'];
                 $UrlDestino = URL . 'controle-home/index';
                 header("Location: $UrlDestino");
             endif;
@@ -51,18 +52,22 @@ class ControleLogin {
     public function cadastrarClasse() {
         $CadClasse = new ModelsLogin();
         $CadClasse->cadastrarClasse();
+        $_SESSION['msg'] = "<div class='alert alert-success'>Sincronizado com sucesso</div>";
+        $UrlDestino = URL . 'controle-login/listar-classe-methodo';
+        header("Location: $UrlDestino");
     }
 
     public function editarPermissao($MethodoId = null) {
         $this->IdMethodo = (int) $MethodoId;
-        //echo "Método: {$this->IdMethodo} <br>";
+        //echo "Método: {$this->IdMethodo}<br>";
         if (!empty($this->IdMethodo)):
             $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
             $this->alterarPrivado();
+
             $CarregarView = new ConfigView("login/editarPermissao", $this->Dados);
             $CarregarView->renderizar();
         else:
-            $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário selecionar um método</div>";
+            $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário selecionar um Método</div>";
             $UrlDestino = URL . 'controle-login/listar-classe-methodo';
             header("Location: $UrlDestino");
         endif;
@@ -76,18 +81,18 @@ class ControleLogin {
             $EditarPermissao->editarPermissoes($this->IdMethodo, $this->Dados);
 
             if (!$EditarPermissao->getResultado()):
-                $_SESSION['msg'] = "<div class='alert alert-danger'>Erro ao editar permissão!</div>";
+                $_SESSION['msg'] = "<div class='alert alert-danger'>Erro ao editar a permissão</div>";
                 $UrlDestino = URL . 'controle-login/listar-classe-methodo';
                 header("Location: $UrlDestino");
             else:
-                $_SESSION['msg'] = "<div class='alert alert-success'>Permissão editada com sucesso!</div>";
+                $_SESSION['msg'] = "<div class='alert alert-success'>Permissão editada com sucesso</div>";
                 $UrlDestino = URL . 'controle-login/listar-classe-methodo';
                 header("Location: $UrlDestino");
             endif;
 
         else:
-            $verPermissao = new ModelsLogin;
-            $this->Dados = $verPermissao->listar($this->IdMethodo);
+            $VerPermissao = new ModelsLogin();
+            $this->Dados = $VerPermissao->listar($this->IdMethodo);
         endif;
     }
 

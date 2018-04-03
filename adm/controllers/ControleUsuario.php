@@ -22,14 +22,14 @@ class ControleUsuario {
     }
 
     public function cadastrar() {
-        $Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-        if (!empty($Dados['SendCadUsuario'])):
-            unset($Dados['SendCadUsuario']);
+        $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        $CadUsuario = new ModelsUsuario();        
+        if (!empty($this->Dados['SendCadUsuario'])):
+            unset($this->Dados['SendCadUsuario']);
 
-            $CadUsuario = new ModelsUsuario();
-            $CadUsuario->cadastrar($Dados);
+            $CadUsuario->cadastrar($this->Dados);
             if (!$CadUsuario->getResultado()):
-                $_SESSION['msg'] = $CadUsuario->getMsg();
+                $_SESSION['msg'] = "<div class='alert alert-danger'><b>Erro ao cadastrar: </b>Para cadastrar o usuário preencha todos os campos!</div>";
             else:
                 $_SESSION['msgcad'] = "<div class='alert alert-success'>Usuário cadastrado com sucesso!</div>";
                 $UrlDestino = URL . 'controle-usuario/index';
@@ -40,7 +40,9 @@ class ControleUsuario {
             $Dados = null;
         endif;
 
-        $CarregarView = new ConfigView("usuario/cadastrarUsuario", $Dados);
+        $Registros = $CadUsuario->listarCadastrar();
+        $this->Dados = array($Registros[0], $Registros[1], $this->Dados);
+        $CarregarView = new ConfigView("usuario/cadastrarUsuario", $this->Dados);
         $CarregarView->renderizar();
     }
 
