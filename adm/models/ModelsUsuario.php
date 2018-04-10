@@ -13,6 +13,7 @@ class ModelsUsuario {
     private $Msg;
     private $RowCount;
     private $ResultadoPaginacao;
+    private $Foto;
 
     const Entity = 'users';
 
@@ -57,7 +58,21 @@ class ModelsUsuario {
         $this->Dados = $Dados;
         $this->ValidarDados();
         if ($this->Resultado):
-            $this->inserir();
+            if (empty($this->Foto['name'])):
+                $this->inserir();
+            else:
+                $SlugImagem = new ModelsValidacao();
+                $SlugImagem->nomeSlug($this->Foto['name']);
+                $this->Foto['name'] = $SlugImagem->getNome();    
+                $this->Dados['foto'] = $this->Foto['name'];
+                //var_dump($this->Dados);  
+                
+                $this->inserir();
+                
+                $UploadFoto = new ModelsUpload();
+                $UploadFoto->upload($this->Foto, 'usuarios/' . $this->Resultado . '/', $this->Dados['foto']);
+                
+            endif;
         endif;
     }
 
@@ -73,7 +88,11 @@ class ModelsUsuario {
         //var_dump($this->Resultado);
         return $this->Resultado;
     }
+
     private function validarDados() {
+        $this->Foto = $this->Dados['foto'];
+        unset($this->Dados['foto'], $this->Dados['foto_antiga']);
+        //var_dump($this->Dados);
         $this->Dados = array_map('strip_tags', $this->Dados);
         $this->Dados = array_map('trim', $this->Dados);
         if (in_array('', $this->Dados)):
@@ -95,10 +114,30 @@ class ModelsUsuario {
     public function editar($UserId, array $Dados) {
         $this->UserId = (int) $UserId;
         $this->Dados = $Dados;
+        $this->UserId = $this->Dados['id'];
+        
+        if(!empty($this->Dados['foto_antiga'])):
+            unlink('assets/imagens/usuarios/' . $this->UserId . '/' . $this->Dados['foto_antiga']);
+        endif;
 
-        $this->validarDados();
+        $this->validarDados();        
         if ($this->Resultado):
-            $this->alterar();
+            if(empty($this->Foto['name'])):
+                $this->alterar();
+            else:
+                $SlugImagem = new ModelsValidacao();
+                $SlugImagem->nomeSlug($this->Foto['name']);
+                $this->Foto['name'] = $SlugImagem->getNome();
+                $this->Dados['foto'] = $this->Foto['name'];
+                
+                $this->alterar();
+                
+                $UploadFoto = new ModelsUpload();
+                $UploadFoto->upload($this->Foto, 'usuarios/' . $this->UserId . '/', $this->Dados['foto']);
+                
+            endif;
+
+//$this->alterar();
         endif;
     }
 
@@ -106,10 +145,8 @@ class ModelsUsuario {
         $Update = new ModelsUpdate();
         $Update->ExeUpdate(self::Entity, $this->Dados, "WHERE id = :id", "id={$this->UserId }");
         if ($Update->getResultado()):
-            $this->Msg = "<div class='alert alert-success'><b>Sucesso: </b>O usuário {$this->Dados['name']} foi editado no sistema!</div>";
             $this->Resultado = true;
         else:
-            $this->Msg = "<div class='alert alert-danger'><b>Erro: </b>O usuário {$this->Dados['name']} não foi editado no sistema!</div>";
             $this->Resultado = false;
         endif;
     }

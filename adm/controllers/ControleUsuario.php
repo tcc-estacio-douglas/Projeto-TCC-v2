@@ -26,7 +26,8 @@ class ControleUsuario {
         $CadUsuario = new ModelsUsuario();        
         if (!empty($this->Dados['SendCadUsuario'])):
             unset($this->Dados['SendCadUsuario']);
-
+            $this->Dados['foto'] = ($_FILES['foto'] ? $_FILES['foto'] : null);
+            //var_dump($this->Dados);
             $CadUsuario->cadastrar($this->Dados);
             if (!$CadUsuario->getResultado()):
                 $_SESSION['msg'] = "<div class='alert alert-danger'><b>Erro ao cadastrar: </b>Para cadastrar o usuário preencha todos os campos!</div>";
@@ -34,10 +35,7 @@ class ControleUsuario {
                 $_SESSION['msgcad'] = "<div class='alert alert-success'>Usuário cadastrado com sucesso!</div>";
                 $UrlDestino = URL . 'controle-usuario/index';
                 header("Location: $UrlDestino");
-            endif;
-
-        else:
-            $Dados = null;
+            endif;        
         endif;
 
         $Registros = $CadUsuario->listarCadastrar();
@@ -65,7 +63,11 @@ class ControleUsuario {
         if (!empty($this->UserId)):
             $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
             $this->alterarPrivado();
-            $_SESSION['msg'] = "<div class='alert alert-success'>Usuário editado com sucesso</div>";
+            
+            $EditaUsuario = new ModelsUsuario();
+            $Registros = $EditaUsuario->listarCadastrar();
+            //var_dump($Registros);
+            $this->Dados = array($Registros[0], $Registros[1], $this->Dados);
             $CarregarView = new ConfigView("usuario/editarUsuario", $this->Dados);
             $CarregarView->renderizar();
         else: 
@@ -78,12 +80,13 @@ class ControleUsuario {
     private function alterarPrivado() {
         if (!empty($this->Dados['SendEditUsuario'])):
             unset($this->Dados['SendEditUsuario']);
+            $this->Dados['foto'] = ($_FILES['foto'] ? $_FILES['foto'] : null);
             $EditaUsuario = new ModelsUsuario();
             $EditaUsuario->editar($this->UserId, $this->Dados);
             if (!$EditaUsuario->getResultado()):
-                $this->Dados['msg'] = $EditaUsuario->getMsg();
+                $_SESSION['msg'] = "<div class='alert alert-danger'>Para editar o usuário preencha todos os campos!</div>"; 
             else:
-                $this->Dados['msg'] = $EditaUsuario->getMsg();
+                $_SESSION['msg'] = "<div class='alert alert-success'>Usuário editado com sucesso!</div>";
                 $UrlDestino = URL . 'controle-usuario/visualizar/' . $this->UserId;
                 header("Location: $UrlDestino");
             endif;

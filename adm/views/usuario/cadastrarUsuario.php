@@ -43,7 +43,15 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">Senha:</label>
             <div class="col-sm-10">
-                <input type="password"  class="form-control" name="password" placeholder="Senha"></div>
+                <input type="password" class="form-control" name="password" placeholder="Senha">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Foto Usuário:</label>
+            <div class="col-sm-10">
+                <input type="file" name="foto">
+            </div>
         </div>
 
 
@@ -56,7 +64,12 @@
                     <?php
                     foreach ($niveisAcessos as $nivelAcesso):
                         extract($nivelAcesso);
-                        echo "<option value='$id'>$nome_niveis_acesso</option>";
+                    if ($valorForm['niveis_acesso_id'] == $id):
+                        $selecionado = "selected";
+                    else:
+                        $selecionado = "";
+                    endif;
+                        echo "<option value='$id' $selecionado>$nome_niveis_acesso</option>";
                     endforeach;
                     ?>
                 </select> 
@@ -71,13 +84,20 @@
                     <?php
                     foreach ($situacaoUsers as $situacaoUser):
                         extract($situacaoUser);
-                        echo "<option value='$id'>$nome_sit_user</option>";
+                    if ($valorForm['situacoes_user_id'] == $id):
+                        $selecionado = "selected";
+                    else:
+                        $selecionado = "";
+                    endif;
+                        echo "<option value='$id' $selecionado>$nome_sit_user</option>";
                     endforeach;
                     ?>
                 </select> 
             </div>
         </div>
 
+        <input type="hidden" name="created" value="<?php echo date("Y-m-d H:i:s"); ?>">
+        
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <input type="submit" class="btn btn-sm btn-success" value="Cadastrar" name="SendCadUsuario">
