@@ -14,7 +14,7 @@ class ControleUsuario {
     public function index($PageId = null) {
         $this->PageId = ((int) $PageId ? $PageId : 1);
         //echo "Número da página: {$this->PageId}<br>";
-        
+
         $ListarUsuarios = new ModelsUsuario();
         $this->Dados = $ListarUsuarios->listar($this->PageId);
         $CarregarView = new ConfigView("usuario/listarUsuario", $this->Dados);
@@ -23,7 +23,7 @@ class ControleUsuario {
 
     public function cadastrar() {
         $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-        $CadUsuario = new ModelsUsuario();        
+        $CadUsuario = new ModelsUsuario();
         if (!empty($this->Dados['SendCadUsuario'])):
             unset($this->Dados['SendCadUsuario']);
             $this->Dados['foto'] = ($_FILES['foto'] ? $_FILES['foto'] : null);
@@ -35,7 +35,7 @@ class ControleUsuario {
                 $_SESSION['msgcad'] = "<div class='alert alert-success'>Usuário cadastrado com sucesso!</div>";
                 $UrlDestino = URL . 'controle-usuario/index';
                 header("Location: $UrlDestino");
-            endif;        
+            endif;
         endif;
 
         $Registros = $CadUsuario->listarCadastrar();
@@ -49,10 +49,18 @@ class ControleUsuario {
         if (!empty($this->UserId)):
             $VerUsuario = new ModelsUsuario();
             $this->Dados = $VerUsuario->visualizar($UserId);
-            $CarregarView = new ConfigView("usuario/visualizarUsuario", $this->Dados);
-            $CarregarView->renderizar();
+
+            if ($VerUsuario->getResultado()):
+                $CarregarView = new ConfigView("usuario/visualizarUsuario", $this->Dados);
+                $CarregarView->renderizar();
+            else:
+                $_SESSION['msg'] = "<div class='alert alert-danger'>Usuário não selecionado!</div>";
+                $UrlDestino = URL . 'controle-usuario/index';
+                header("Location: $UrlDestino");
+            endif;
+
         else:
-            $_SESSION['msg'] = "Necessário selecionar um usuário<br>";
+            $_SESSION['msg'] = "<div class='alert alert-danger'>Usuário não selecionado!</div>";
             $UrlDestino = URL . 'controle-usuario/index';
             header("Location: $UrlDestino");
         endif;
@@ -63,14 +71,14 @@ class ControleUsuario {
         if (!empty($this->UserId)):
             $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
             $this->alterarPrivado();
-            
+
             $EditaUsuario = new ModelsUsuario();
             $Registros = $EditaUsuario->listarCadastrar();
             //var_dump($Registros);
             $this->Dados = array($Registros[0], $Registros[1], $this->Dados);
             $CarregarView = new ConfigView("usuario/editarUsuario", $this->Dados);
             $CarregarView->renderizar();
-        else: 
+        else:
             $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário selecionar um usuário</div>";
             $UrlDestino = URL . 'controle-usuario/index';
             header("Location: $UrlDestino");
@@ -84,7 +92,7 @@ class ControleUsuario {
             $EditaUsuario = new ModelsUsuario();
             $EditaUsuario->editar($this->UserId, $this->Dados);
             if (!$EditaUsuario->getResultado()):
-                $_SESSION['msg'] = "<div class='alert alert-danger'>Para editar o usuário preencha todos os campos!</div>"; 
+                $_SESSION['msg'] = "<div class='alert alert-danger'>Para editar o usuário preencha todos os campos!</div>";
             else:
                 $_SESSION['msg'] = "<div class='alert alert-success'>Usuário editado com sucesso!</div>";
                 $UrlDestino = URL . 'controle-usuario/visualizar/' . $this->UserId;
@@ -93,12 +101,12 @@ class ControleUsuario {
         else:
             $VerUsuario = new ModelsUsuario();
             $this->Dados = $VerUsuario->visualizar($this->UserId);
-            if($VerUsuario->getRowCount() <= 0):
+            if ($VerUsuario->getRowCount() <= 0):
                 $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário selecionar um usuário</div>";
                 $UrlDestino = URL . 'controle-usuario/index';
                 header("Location: $UrlDestino");
             endif;
-            //var_dump($this->Dados);
+        //var_dump($this->Dados);
         endif;
     }
 

@@ -13,6 +13,7 @@
                         <li><a href="<?php echo URL; ?>controle-home/index">Dashboard</a></li>
                         <li><a href="<?php echo URL; ?>controle-usuario/index">Usuários</a></li>
                         <li><a href="<?php echo URL; ?>controle-login/listar-classe-methodo">Permissões</a></li>
+                        <li><a href="<?php echo URL; ?>controle-niveis-acesso/index">Nivel de Acesso</a></li>
                         <li><a href="<?php echo URL; ?>controle-login/logout">Sair</a></li>
                     </ul>
                 </div>
@@ -27,6 +28,7 @@
                         <li><a href="<?php echo URL; ?>controle-home/index">Dashboard</a></li>
                         <li><a href="<?php echo URL; ?>controle-usuario/index">Usuários</a></li>
                         <li><a href="<?php echo URL; ?>controle-login/listar-classe-methodo">Permissões</a></li>
+                        <li><a href="<?php echo URL; ?>controle-niveis-acesso/index">Nivel de Acesso</a></li>
                         <li><a href="<?php echo URL; ?>controle-login/logout">Sair</a></li>
                     </ul>
                 </div><br>
