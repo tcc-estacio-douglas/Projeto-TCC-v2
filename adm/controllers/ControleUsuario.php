@@ -66,6 +66,27 @@ class ControleUsuario {
         endif;
     }
 
+    public function verPerfil() {
+        $this->UserId = (int) $_SESSION['id'];
+        if (!empty($this->UserId)):
+            $VerUsuario = new ModelsUsuario();
+            $this->Dados = $VerUsuario->visualizar($this->UserId);
+            if ($VerUsuario->getResultado()):
+                $CarregarView = new ConfigView('usuario/verPerfil', $this->Dados);
+                $CarregarView->renderizar();
+            else:
+                $_SESSION['msg'] = "<div class='alert alert-danger'>Area Restrita!</div>";
+                $UrlDestino = URL . 'controle-login/login';
+                header("Location: $UrlDestino");
+            endif;
+
+        else:
+            $_SESSION['msg'] = "<div class='alert alert-danger'>Area Restrita!</div>";
+            $UrlDestino = URL . 'controle-login/login';
+            header("Location: $UrlDestino");
+        endif;
+    }
+
     public function editar($UserId = null) {
         $this->UserId = (int) $UserId;
         if (!empty($this->UserId)):
@@ -107,6 +128,42 @@ class ControleUsuario {
                 header("Location: $UrlDestino");
             endif;
         //var_dump($this->Dados);
+        endif;
+    }
+
+    public function editarPerfil() {
+        $this->UserId = (int) $_SESSION['id'];
+        if (!empty($this->UserId)):
+            $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+            $this->alterarPerfilPrivado();
+
+            $CarregarView = new ConfigView("usuario/editarPerfil", $this->Dados);
+            $CarregarView->renderizar();
+        else:
+            $_SESSION['msg'] = "<div class='alert alert-danger'>Area restrita!</div>";
+            $UrlDestino = URL . 'controle-login/login';
+            header("Location: $UrlDestino");
+        endif;
+    }
+
+    private function alterarPerfilPrivado() {
+        if (!empty($this->Dados['SendEditUsuario'])):
+            unset($this->Dados['SendEditUsuario']);
+            $this->Dados['foto'] = ($_FILES['foto'] ? $_FILES['foto'] : null);
+            $EditarUsuario = new ModelsUsuario();
+            $EditarUsuario->editar($this->UserId, $this->Dados);
+            if (!$EditarUsuario->getResultado()):
+                $_SESSION['msg'] = "<div class='alert alert-danger'>Preencha todos os campos para editar!</div>";
+            else:
+                $AtualizarSessao = new ModelsUsuario();
+                $AtualizarSessao->atualizaSessao($this->UserId);
+                $_SESSION['msg'] = "<div class='alert alert-success'>Dados editado com sucesso!</div>";
+                $UrlDestino = URL . 'controle-usuario/ver-perfil';
+                header("Location: $UrlDestino");
+            endif;
+        else:
+            $VerUsuario = new ModelsUsuario();
+            $this->Dados = $VerUsuario->visualizar($this->UserId);
         endif;
     }
 

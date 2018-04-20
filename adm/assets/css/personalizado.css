@@ -45,3 +45,17 @@
     padding-top: 0px;
     padding-bottom: 40px;
 }
+
+.perfil{
+    border-radius: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #30b19b;
+    border: 0px;
+    color: #fff;
+}
+
+.perfil span{
+    padding: 5px 2px;
+    color: #fff;
+}

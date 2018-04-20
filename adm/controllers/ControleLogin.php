@@ -20,10 +20,10 @@ class ControleLogin {
                 $_SESSION['msg'] = $Login->getMsg();
             else:
                 $this->Dados = $Login->getResultado();
-                $_SESSION['id'] = $this->Dados[0]['id'];
-                $_SESSION['name'] = $this->Dados[0]['name'];
-                $_SESSION['email'] = $this->Dados[0]['email'];
-                $_SESSION['niveis_acesso_id'] = $this->Dados[0]['niveis_acesso_id'];
+            
+                $AtualizarSessao = new ModelsUsuario();
+                $AtualizarSessao->atualizaSessao($this->Dados[0] ['id']);
+                
                 $UrlDestino = URL . 'controle-home/index';
                 header("Location: $UrlDestino");
             endif;

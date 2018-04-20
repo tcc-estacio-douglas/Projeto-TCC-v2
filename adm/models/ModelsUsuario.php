@@ -63,15 +63,15 @@ class ModelsUsuario {
             else:
                 $SlugImagem = new ModelsValidacao();
                 $SlugImagem->nomeSlug($this->Foto['name']);
-                $this->Foto['name'] = $SlugImagem->getNome();    
+                $this->Foto['name'] = $SlugImagem->getNome();
                 $this->Dados['foto'] = $this->Foto['name'];
                 //var_dump($this->Dados);  
-                
+
                 $this->inserir();
-                
+
                 $UploadFoto = new ModelsUpload();
                 $UploadFoto->upload($this->Foto, 'usuarios/' . $this->Resultado . '/', $this->Dados['foto']);
-                
+
             endif;
         endif;
     }
@@ -91,6 +91,7 @@ class ModelsUsuario {
 
     private function validarDados() {
         $this->Foto = $this->Dados['foto'];
+        $this->Foto['foto_antiga'] = $this->Dados['foto_antiga'];
         unset($this->Dados['foto'], $this->Dados['foto_antiga']);
         //var_dump($this->Dados);
         $this->Dados = array_map('strip_tags', $this->Dados);
@@ -115,26 +116,24 @@ class ModelsUsuario {
         $this->UserId = (int) $UserId;
         $this->Dados = $Dados;
         $this->UserId = $this->Dados['id'];
-        
-        if(!empty($this->Dados['foto_antiga'])):
-            unlink('assets/imagens/usuarios/' . $this->UserId . '/' . $this->Dados['foto_antiga']);
-        endif;
-
-        $this->validarDados();        
+        $this->validarDados();
         if ($this->Resultado):
-            if(empty($this->Foto['name'])):
+            if (empty($this->Foto['name'])):
                 $this->alterar();
             else:
+                if (file_exists('assets/imagens/usuarios/' . $this->UserId . '/' . $this->Foto['foto_antiga'])):
+                    unlink('assets/imagens/usuarios/' . $this->UserId . '/' . $this->Foto['foto_antiga']);
+                endif;
                 $SlugImagem = new ModelsValidacao();
                 $SlugImagem->nomeSlug($this->Foto['name']);
                 $this->Foto['name'] = $SlugImagem->getNome();
                 $this->Dados['foto'] = $this->Foto['name'];
-                
+
                 $this->alterar();
-                
+
                 $UploadFoto = new ModelsUpload();
                 $UploadFoto->upload($this->Foto, 'usuarios/' . $this->UserId . '/', $this->Dados['foto']);
-                
+
             endif;
 
 //$this->alterar();
@@ -163,6 +162,17 @@ class ModelsUsuario {
         else:
             $_SESSION['msg'] = "<div class='alert alert-danger'>Não foi encontrado o usuário.</div>";
         endif;
+    }
+    
+    public function atualizaSessao($UserId) {
+        $this->UserId = (int) $UserId;
+        $this->Dados = $this->visualizar($this->UserId);
+        //var_dump($this->Dados);
+        $_SESSION['id'] = $this->Dados[0]['id'];
+        $_SESSION['name'] = $this->Dados[0]['name'];
+        $_SESSION['email'] = $this->Dados[0]['email'];
+        $_SESSION['foto'] = $this->Dados[0]['foto'];
+        $_SESSION['niveis_acesso_id'] = $this->Dados[0]['niveis_acesso_id'];
     }
 
 }
