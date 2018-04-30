@@ -24,16 +24,17 @@ class ConfigController {
                 $this->UrlController = $this->slugController($this->UrlConjunto[0]);
             endif;
 
-            if (isset($this->UrlConjunto[1])):
-                $this->UrlMetodo = $this->slugMetodo($this->UrlConjunto[1]);
-            endif;
+            //if (isset($this->UrlConjunto[1])):
+              //  $this->UrlMetodo = $this->slugMetodo($this->UrlConjunto[1]);
+            //endif;
 
-            if (isset($this->UrlConjunto[2])):
-                $this->UrlParamentro = $this->slugMetodo($this->UrlConjunto[2]);
+            if (isset($this->UrlConjunto[1])):
+                $this->UrlParamentro = $this->slugMetodo($this->UrlConjunto[1]);
             else:
                 $this->UrlParamentro = null;
             endif;
-
+            
+            $this->UrlMetodo = "index";
         else:
             $this->UrlController = $this->slugController(CONTROLER);
             $this->UrlMetodo = $this->slugMetodo(METODO);
@@ -68,7 +69,6 @@ class ConfigController {
         //Verificar se UrlController existe com nome de classe
         if (class_exists($this->UrlController)):
             try {
-                $this->login();
                 $this->carregarMetodo();
             } catch (Exception $e) {
                 $this->UrlController = $this->slugController(CONTROLER);
@@ -98,39 +98,4 @@ class ConfigController {
             $this->carregarMetodo();
         endif;
     }
-
-    private function login() {
-        if (!isset($_SESSION['id'])):
-            if ((($this->UrlController == 'ControleLogin') & ($this->UrlMetodo == 'login')) || (($this->UrlController == '') & ($this->UrlMetodo == ''))):
-                $this->UrlController = 'ControleLogin';
-                $this->UrlMetodo = 'login';
-            else:
-                $this->permitirAcessoPublico();
-            endif;
-
-        else:
-            //echo "Classe: {$this->UrlController}<br>";
-            //echo "Método: {$this->UrlMetodo}<br>";
-            //echo "Nivel de acesso: ".$_SESSION['niveis_acesso_id']."<br>";
-
-            $VerPemitirAcesso = new ModelsLogin();
-            $VerPemitirAcesso->permitirAcesso($this->UrlController, $this->UrlMetodo);
-            if (!$VerPemitirAcesso->getResultado()):
-                $_SESSION['msg'] = "<div class='alert alert-danger'>Página restrita.</div>";
-                $this->UrlController = 'ControleLogin';
-                $this->UrlMetodo = 'login';
-            endif;
-        endif;
-    }
-
-    private function permitirAcessoPublico() {
-        $VerPermitirAcesso = new ModelsLogin();
-        $VerPermitirAcesso->permitirAcesso($this->UrlController, $this->UrlMetodo);
-        if (!$VerPermitirAcesso->getResultado()):
-            $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário realizar o login para acessar a página.</div>";
-            $this->UrlController = 'ControleLogin';
-            $this->UrlMetodo = 'login';
-        endif;
-    }
-
 }

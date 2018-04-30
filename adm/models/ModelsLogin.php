@@ -249,18 +249,12 @@ class ModelsLogin {
     public function permitirAcesso($Classe, $Metodo) {
         $this->Classe = (string) $Classe;
         $this->Methodos = (string) $Metodo;
-        $niveis_acesso_id = $_SESSION['niveis_acesso_id'];
+        $niveis_acesso_id = ($_SESSION['niveis_acesso_id'] ? $_SESSION['niveis_acesso_id'] : 2);
         if ($niveis_acesso_id == 1):
             $this->Resultado = true;
         else:
             $Listar = new ModelsRead();
-            $Listar->fullRead("select per.*, cla.nome_classe classes, met.nome_method methodos, niv.nome_niveis_acesso niveis_acessos
-            from permissoes per
-            INNER JOIN classes cla on cla.id = per.classe_id
-            INNER JOIN methodos met on met.id = per.methodo_id
-            INNER JOIN niveis_acessos niv on niv.id = per.niveis_acesso_id
-            WHERE cla.nome_classe =:nome_classe AND met.nome_method =:nome_method AND per.niveis_acesso_id =:niveis_acesso_id AND per.situacao_permissao =:situacao_permissao
-            LIMIT :limit", "nome_classe={$this->Classe}&nome_method={$this->Methodos}&niveis_acesso_id=$niveis_acesso_id&situacao_permissao=1&limit=1");
+            $Listar->fullRead("select per.*, cla.nome_classe classes, met.nome_method methodos, niv.nome_niveis_acesso niveis_acessos from permissoes per INNER JOIN classes cla on cla.id = per.classe_id INNER JOIN methodos met on met.id = per.methodo_id INNER JOIN niveis_acessos niv on niv.id = per.niveis_acesso_id WHERE cla.nome_classe =:nome_classe AND met.nome_method =:nome_method AND per.niveis_acesso_id =:niveis_acesso_id AND per.situacao_permissao =:situacao_permissao LIMIT :limit", "nome_classe={$this->Classe}&nome_method={$this->Methodos}&niveis_acesso_id=$niveis_acesso_id&situacao_permissao=1&limit=1");
 
             $this->Resultado = $Listar->getResultado();
             //var_dump($this->Resultado);

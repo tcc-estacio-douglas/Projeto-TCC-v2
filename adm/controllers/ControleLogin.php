@@ -20,10 +20,10 @@ class ControleLogin {
                 $_SESSION['msg'] = $Login->getMsg();
             else:
                 $this->Dados = $Login->getResultado();
-            
+
                 $AtualizarSessao = new ModelsUsuario();
                 $AtualizarSessao->atualizaSessao($this->Dados[0] ['id']);
-                
+
                 $UrlDestino = URL . 'controle-home/index';
                 header("Location: $UrlDestino");
             endif;
@@ -40,6 +40,26 @@ class ControleLogin {
         $_SESSION['msg'] = "<div class='alert alert-success'>Deslogado com sucesso</div>";
         $UrlDestino = URL . 'controle-login/login';
         header("Location: $UrlDestino");
+    }
+
+    public function recuperarSenha() {
+        $CarregarView = new ConfigView('login/recuperarSenha');
+        $CarregarView->renderizarlogin();
+        $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+        if (!empty($this->Dados['SendRecupSenha'])):
+            unset($this->Dados['SendRecupSenha']);
+            $RecuperarSenha = new ModelsRecuperarSenha();
+            $RecuperarSenha->recuperarSenha($this->Dados);
+            if ($RecuperarSenha->getResultado()):
+                $_SESSION['msg'] = "<div class='alert alert-success'>Dados de recuperação de senha enviado para o e-mail cadastrado!</div>";
+                $UrlDestino = URL . 'controle-login/login';
+                header("Location: $UrlDestino");
+            else:
+                $_SESSION['msg'] = "<div class='alert alert-danger'>E-mail não encontrado!</div>";
+                $UrlDestino = URL . 'controle-login/recuperar-senha';
+                header("Location: $UrlDestino");
+            endif;
+        endif;
     }
 
     public function listarClasseMethodo() {

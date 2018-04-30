@@ -1,0 +1,70 @@
+.header-menu{
+    background-color: #1aad72;
+    color: #fff;
+    font-size: 18px;
+}
+.espaco-topo{
+    margin-top: 65px;
+    color: #fff;
+}
+.logo-small {
+    color: #1aad72;
+    font-size: 50px;
+}
+
+.logo {
+    color: #1aad72;
+    font-size: 200px;
+}
+
+.servicos{
+    margin-top: 50px;
+}
+
+.video-home{
+    background-color: #1aad72;
+    margin-top: 25px;
+    margin-bottom: 0px;
+}
+
+.espaco-artigo{
+	margin-top: 0px;
+	padding: 55px 0px;
+	background-color: #f1f1f4;
+}
+.espaco-artigo-titulo{
+	text-align: center;
+	margin-bottom: 55px;
+}
+.footer-home{
+    background-color: #1aad72;
+    padding: 25px 0px;
+    color: #fff;
+}
+
+/*Fixar rodape final da página */
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+}
+
+.cursos-titulo{
+    margin-top: 65px;
+    color: #5e5e5e;
+    font-size: 25px;
+    padding: 25px 0px;
+    border-bottom: 1px solid #adadad;
+}
+
+.icone-header-contato{
+    color: #fff;
+    font-size: 550px;
+    padding: 0px 5px;
+}
+
+.link-blog-titulo a:hover{
+    text-decoration: none;
+}
