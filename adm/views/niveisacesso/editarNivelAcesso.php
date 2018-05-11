@@ -1,7 +1,9 @@
 <?php
 if (isset($this->Dados[0])):
     $valorForm = $this->Dados[0];
-    //var_dump($valorForm);
+//var_dump($valorForm);
+elseif (isset($this->Dados)):
+    $valorForm = $this->Dados;
 endif;
 ?>
 <div class="well">

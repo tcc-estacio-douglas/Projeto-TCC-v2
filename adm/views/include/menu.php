@@ -11,6 +11,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="<?php echo URL; ?>controle-home/index">Dashboard</a></li>
+                <li><a href="<?php echo URL; ?>controle-carousel/index">Carousel</a></li>
                 <li><a href="<?php echo URL; ?>controle-usuario/index">Usuários</a></li>
                 <li><a href="<?php echo URL; ?>controle-login/listar-classe-methodo">Permissões</a></li>
                 <li><a href="<?php echo URL; ?>controle-niveis-acesso/index">Nivel de Acesso</a></li>
@@ -56,6 +57,7 @@
             </div> 
             <ul class="nav nav-pills nav-stacked">
                 <li><a href="<?php echo URL; ?>controle-home/index">Dashboard</a></li>
+                <li><a href="<?php echo URL; ?>controle-carousel/index">Carousel</a></li>
                 <li><a href="<?php echo URL; ?>controle-usuario/index">Usuários</a></li>
                 <li><a href="<?php echo URL; ?>controle-login/listar-classe-methodo">Permissões</a></li>
                 <li><a href="<?php echo URL; ?>controle-niveis-acesso/index">Nivel de Acesso</a></li>

@@ -5,6 +5,12 @@ define('URL', 'http://localhost/tcc-login/');
 define('CONTROLER', 'home');
 define('METODO', 'index');
 
+//Credenciais de acesso ao BD
+define('HOST', 'localhost');
+define('USER', 'root');
+define('PASS', '');
+define('DBNAME', 'celke');
+
 function __autoload($Class) {
     $dirName = array(
         'controllers',
