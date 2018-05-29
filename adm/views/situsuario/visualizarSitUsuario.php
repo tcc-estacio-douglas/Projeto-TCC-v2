@@ -2,10 +2,10 @@
     <div class="pull-right">
         <a href="<?php echo URL; ?>controle-sit-usuario/index"><button type="button" class="btn btn-sm btn-success">Listar</button></a>
         <a href="<?php echo URL; ?>controle-sit-usuario/editar/<?php echo $this->Dados[0]['id']; ?>"><button type="button" class="btn btn-sm btn-warning">Editar</button></a>
-        <a href="<?php echo URL; ?>controle-sit-usuario/apagar/<?php echo $this->Dados[0]['id']; ?>"><button type="button" class="btn btn-sm btn-danger">Apagar</button></a>
+         <a href="<?php echo URL; ?>controle-sit-usuario/apagar/<?php echo $this->Dados[0]['id']; ?>"><button type="button" class="btn btn-sm btn-danger">Apagar</button></a>
     </div>
     <div class="page-header">
-        <h1>Detalhes Situação Usuário</h1>
+        <h1>Detalhes do Nivel de Acesso</h1>
     </div>
     <?php
     if (isset($_SESSION['msg'])):
@@ -20,21 +20,15 @@
 
             <dt>Nome</dt>
             <dd><?php echo $this->Dados[0]['nome_sit_user']; ?></dd>
-
+            
             <dt>Inserido</dt>
-            <dd>
-                <?php
-                if (!empty($this->Dados[0]['created'])):
-                    echo date('d/m/Y H:i:s', strtotime($this->Dados[0]['created']));
-                endif;
-                ?>
-            </dd>
+            <dd><?php echo date('d/m/Y H:i:s', strtotime($this->Dados[0]['created'])); ?></dd>
 
             <dt>Alterado</dt>
             <dd>
                 <?php
-                if (!empty($this->Dados[0]['modified'])):
-                    echo date('d/m/Y H:i:s', strtotime($this->Dados[0]['modified']));
+                if(!empty($this->Dados[0]['modified'])):
+                    echo date('d/m/Y H:i:s', strtotime($this->Dados[0]['modified']));        
                 endif;
                 ?>
             </dd>

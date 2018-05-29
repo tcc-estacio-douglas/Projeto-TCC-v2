@@ -91,8 +91,7 @@ class ModelsUsuario {
 
     private function validarDados() {
         $this->Foto = $this->Dados['foto'];
-        $this->Foto['foto_antiga'] = $this->Dados['foto_antiga'];
-        unset($this->Dados['foto'], $this->Dados['foto_antiga']);
+        unset($this->Dados['foto']);
         //var_dump($this->Dados);
         $this->Dados = array_map('strip_tags', $this->Dados);
         $this->Dados = array_map('trim', $this->Dados);
@@ -116,6 +115,9 @@ class ModelsUsuario {
         $this->UserId = (int) $UserId;
         $this->Dados = $Dados;
         $this->UserId = $this->Dados['id'];
+        $this->Foto['foto_antiga'] = $this->Dados['foto_antiga'];
+        unset($this->Dados['foto_antiga']);
+
         $this->validarDados();
         if ($this->Resultado):
             if (empty($this->Foto['name'])):
@@ -163,7 +165,7 @@ class ModelsUsuario {
             $_SESSION['msg'] = "<div class='alert alert-danger'>Não foi encontrado o usuário.</div>";
         endif;
     }
-    
+
     public function atualizaSessao($UserId) {
         $this->UserId = (int) $UserId;
         $this->Dados = $this->visualizar($this->UserId);

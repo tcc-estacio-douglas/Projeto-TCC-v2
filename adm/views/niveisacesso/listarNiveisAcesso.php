@@ -29,13 +29,13 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nivel de Acesso</th>
+                    <th>Nivel de acesso</th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                foreach ($this->Dados as $nivelAcesso):
+                foreach ($this->Dados as $nivelAcesso) :
                     extract($nivelAcesso);
                     ?>               
                     <tr>

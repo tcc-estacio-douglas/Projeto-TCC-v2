@@ -1,5 +1,6 @@
 <?php
 session_start();
+ob_start();
 define('URL', 'http://localhost/tcc-login/');
 
 define('CONTROLER', 'home');

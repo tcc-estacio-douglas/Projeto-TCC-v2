@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Descrição de ModelsNiveisAcesso
+ * Descricao de ModelsNiveisAcesso
  *
- * @copyright (c) 2018, Douglas Caetano Lima
+ * @copyright (c) year, Cesar Szpak - Celke
  */
 class ModelsNiveisAcesso {
 
     private $Resultado;
-    private $NivelAcessoId;
+    private $NiveilAcessoId;
     private $Dados;
     private $Msg;
     private $RowCount;
@@ -26,8 +26,8 @@ class ModelsNiveisAcesso {
         return $this->RowCount;
     }
 
-    public function listar($PageId = null) {
-        $Paginacao = new ModelsPaginacao(URL . 'controle-niveis-acesso/index');
+    public function listar($PageId) {
+        $Paginacao = new ModelsPaginacao(URL . 'controle-niveis-acesso/index/');
         $Paginacao->condicao($PageId, 20);
         $this->ResultadoPaginacao = $Paginacao->paginacao('niveis_acessos');
 
@@ -61,25 +61,24 @@ class ModelsNiveisAcesso {
 
     private function inserir() {
         $Create = new ModelsCreate();
+        var_dump($this->Dados);
         $Create->ExeCreate('niveis_acessos', $this->Dados);
         if ($Create->getResultado()):
             $this->Resultado = $Create->getResultado();
-        else:
-
         endif;
     }
 
-    public function visualizar($NivelAcessoId) {
-        $this->NivelAcessoId = (int) $NivelAcessoId;
-        $Visualizar = new ModelsRead();
-        $Visualizar->ExeRead('niveis_acessos', 'WHERE id =:id LIMIT :limit', "id={$this->NivelAcessoId}&limit=1");
-        $this->Resultado = $Visualizar->getResultado();
-        $this->RowCount = $Visualizar->getRowCount();
+    public function visualizar($NiveilAcessoId) {
+        $this->NiveilAcessoId = (int) $NiveilAcessoId;
+        $Visulizar = new ModelsRead();
+        $Visulizar->ExeRead('niveis_acessos', 'WHERE id =:id LIMIT :limit', "id={$this->NiveilAcessoId}&limit=1");
+        $this->Resultado = $Visulizar->getResultado();
+        $this->RowCount = $Visulizar->getRowCount();
         return $this->Resultado;
     }
 
-    public function editar($NivelAcessoId, array $Dados) {
-        $this->NivelAcessoId = (int) $NivelAcessoId;
+    public function editar($NiveilAcessoId, array $Dados) {
+        $this->NiveilAcessoId = (int) $NiveilAcessoId;
         $this->Dados = $Dados;
         $this->validarDados();
         if ($this->Resultado):
@@ -97,16 +96,16 @@ class ModelsNiveisAcesso {
         endif;
     }
 
-    public function apagar($NivelAcessoId) {
-        $this->NivelAcessoId = (int) $NivelAcessoId;
-        $this->Dados = $this->visualizar($this->NivelAcessoId);
+    public function apagar($NiveilAcessoId) {
+        $this->NiveilAcessoId = (int) $NiveilAcessoId;
+        $this->Dados = $this->visualizar($this->NiveilAcessoId);
         if ($this->getRowCount() >= 0):
             $ApagarNivelAcesso = new ModelsDelete();
-            $ApagarNivelAcesso->ExeDelete('niveis_acessos', 'WHERE id =:id', "id={$this->NivelAcessoId}");
+            $ApagarNivelAcesso->ExeDelete('niveis_acessos', 'WHERE id =:id', "id={$this->NiveilAcessoId}");
             $this->Resultado = $ApagarNivelAcesso->getResultado();
-            $_SESSION['msg'] = "<div class='alert alert-success'>Nivel de acesso apagado com sucesso!</div>";
+             $_SESSION['msg'] = "<div class='alert alert-success'>Nivel de acesso apagado com sucesso!</div>";
         else:
-            $_SESSION['msg'] = "<div class='alert alert-danger'>Nivel de acesso não selecionado!</div>";
+            $_SESSION['msg'] = "<div class='alert alert-success'>Nivel de acesso não foi apagado com sucesso!</div>";
         endif;
     }
 

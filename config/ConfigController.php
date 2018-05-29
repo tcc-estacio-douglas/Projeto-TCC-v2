@@ -24,16 +24,16 @@ class ConfigController {
                 $this->UrlController = $this->slugController($this->UrlConjunto[0]);
             endif;
 
-            //if (isset($this->UrlConjunto[1])):
-              //  $this->UrlMetodo = $this->slugMetodo($this->UrlConjunto[1]);
-            //endif;
+//            if (isset($this->UrlConjunto[1])):
+//                $this->UrlMetodo = $this->slugMetodo($this->UrlConjunto[1]);
+//            endif;
 
             if (isset($this->UrlConjunto[1])):
-                $this->UrlParamentro = $this->slugMetodo($this->UrlConjunto[1]);
+                $this->UrlParamentro = $this->UrlConjunto[1];
             else:
                 $this->UrlParamentro = null;
             endif;
-            
+
             $this->UrlMetodo = "index";
         else:
             $this->UrlController = $this->slugController(CONTROLER);
@@ -98,4 +98,6 @@ class ConfigController {
             $this->carregarMetodo();
         endif;
     }
+
+
 }

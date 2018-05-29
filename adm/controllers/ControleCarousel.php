@@ -1,23 +1,27 @@
 <?php
 
 /**
- * Descrição de ControleCarousel
+ * Descricao de ControleCarousel
  *
- * @copyright (c) 2018, Douglas Caetano Lima
+ * @copyright (c) year, Cesar Szpak - Celke
  */
 class ControleCarousel {
-
+    private $Menu;
     private $Dados;
     private $CarouselId;
 
     public function index() {
+        $ListarMenu = new ModelsMenu();
+        $this->Menu = $ListarMenu->listar();
         $ListarCarousel = new ModelsCarousel();
         $this->Dados = $ListarCarousel->listar();
-        $CarregarView = new ConfigView("carousel/listarCarousel", $this->Dados);
+        $CarregarView = new ConfigView("carousel/listarCarousel", $this->Menu, $this->Dados);
         $CarregarView->renderizar();
     }
 
     public function cadastrar() {
+        $ListarMenu = new ModelsMenu();
+        $this->Menu = $ListarMenu->listar();
         $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         if ($this->Dados['SendCadCarousel']):
             unset($this->Dados['SendCadCarousel']);
@@ -34,18 +38,20 @@ class ControleCarousel {
             endif;
         endif;
 
-        $CarregarView = new ConfigView("carousel/cadastrarCarousel");
+        $CarregarView = new ConfigView("carousel/cadastrarCarousel", $this->Menu);
         $CarregarView->renderizar();
     }
 
     public function visualizar($CarouselId = null) {
+        $ListarMenu = new ModelsMenu();
+        $this->Menu = $ListarMenu->listar();
         $this->CarouselId = (int) $CarouselId;
         if (!empty($this->CarouselId)):
             $VerCarousel = new ModelsCarousel();
             $this->Dados = $VerCarousel->visualizar($this->CarouselId);
 
             if ($VerCarousel->getResultado()):
-                $CarregarView = new ConfigView("carousel/visualizarCarousel", $this->Dados);
+                $CarregarView = new ConfigView("carousel/visualizarCarousel", $this->Menu, $this->Dados);
                 $CarregarView->renderizar();
             else:
                 $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário seleciona um carousel!</div>";
@@ -60,13 +66,15 @@ class ControleCarousel {
     }
 
     public function editar($CarouselId = null) {
+        $ListarMenu = new ModelsMenu();
+        $this->Menu = $ListarMenu->listar();
         $this->CarouselId = (int) $CarouselId;
         if (!empty($this->CarouselId)):
             $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
             $this->alterarPrivado();
 
-            $CarregarView = new ConfigView("carousel/editarCarousel", $this->Dados);
+            $CarregarView = new ConfigView("carousel/editarCarousel", $this->Menu, $this->Dados);
             $CarregarView->renderizar();
         else:
             $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário selecionar um Carousel</div>";

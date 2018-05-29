@@ -13,6 +13,7 @@
         echo $_SESSION['msgcad'];
         unset($_SESSION['msgcad']);
     endif;
+
     ?>
 
     <div class="pull-right">
@@ -33,7 +34,7 @@
             </thead>
             <tbody>
                 <?php
-                foreach ($this->Dados as $carousel):
+                foreach ($this->Dados as $carousel) :
                     extract($carousel);
                     ?>               
                     <tr>
@@ -59,10 +60,10 @@
             </tbody>
         </table>
         <?php
-        else:
-            echo "<div class='alert alert-danger'>Carousel não encontrado!</div>";
+    else:
+        echo "<div class='alert alert-danger'>Nenhum carousel encontrado!</div>";
     endif;
-//var_dump($this->Dados);
+    //var_dump($this->Dados);
     ?>
 </div>
 

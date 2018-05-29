@@ -83,7 +83,7 @@ endif;
         ?>">
 
         <div class="form-group">
-            <label class="col-sm-2 control-label">Foto Usuário:</label>
+            <label class="col-sm-2 control-label">Foto:</label>
             <div class="col-sm-10">
                 <input type="file"  name="foto"/>
             </div>

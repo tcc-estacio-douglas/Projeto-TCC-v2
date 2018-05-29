@@ -59,6 +59,13 @@ endif;
             echo $valorForm['foto'];
         endif;
         ?>">
+        
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Tamanho da Imagem:</label>
+            <div class="col-sm-10">
+                1902 x 448
+            </div>
+        </div>
 
         <div class="form-group">
             <label class="col-sm-2 control-label">Foto:</label>
@@ -80,9 +87,9 @@ endif;
                     endif;
                     
                     if ($valorForm['situacao_carousel'] == 2):
-                        echo "<option value='1' selected>Desabilitado</option>";
+                        echo "<option value='2' selected>Desabilitado</option>";
                     else:
-                        echo "<option value='1'>Desabilitado</option>";
+                        echo "<option value='2'>Desabilitado</option>";
                     endif;
                     ?>
                 </select> 

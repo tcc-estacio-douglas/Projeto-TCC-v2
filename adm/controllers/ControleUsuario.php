@@ -7,21 +7,26 @@
  */
 class ControleUsuario {
 
+    private $Menu;
     private $Dados;
     private $UserId;
     private $PageId;
 
     public function index($PageId = null) {
+        $ListarMenu = new ModelsMenu();
+        $this->Menu = $ListarMenu->listar();
         $this->PageId = ((int) $PageId ? $PageId : 1);
         //echo "Número da página: {$this->PageId}<br>";
 
         $ListarUsuarios = new ModelsUsuario();
         $this->Dados = $ListarUsuarios->listar($this->PageId);
-        $CarregarView = new ConfigView("usuario/listarUsuario", $this->Dados);
+        $CarregarView = new ConfigView("usuario/listarUsuario", $this->Menu, $this->Dados);
         $CarregarView->renderizar();
     }
 
     public function cadastrar() {
+        $ListarMenu = new ModelsMenu();
+        $this->Menu = $ListarMenu->listar();
         $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
         $CadUsuario = new ModelsUsuario();
         if (!empty($this->Dados['SendCadUsuario'])):
@@ -40,46 +45,49 @@ class ControleUsuario {
 
         $Registros = $CadUsuario->listarCadastrar();
         $this->Dados = array($Registros[0], $Registros[1], $this->Dados);
-        $CarregarView = new ConfigView("usuario/cadastrarUsuario", $this->Dados);
+        $CarregarView = new ConfigView("usuario/cadastrarUsuario", $this->Menu, $this->Dados);
         $CarregarView->renderizar();
     }
 
     public function visualizar($UserId = null) {
+        $ListarMenu = new ModelsMenu();
+        $this->Menu = $ListarMenu->listar();
         $this->UserId = (int) $UserId;
         if (!empty($this->UserId)):
             $VerUsuario = new ModelsUsuario();
             $this->Dados = $VerUsuario->visualizar($UserId);
 
             if ($VerUsuario->getResultado()):
-                $CarregarView = new ConfigView("usuario/visualizarUsuario", $this->Dados);
+                $CarregarView = new ConfigView("usuario/visualizarUsuario", $this->Menu, $this->Dados);
                 $CarregarView->renderizar();
             else:
-                $_SESSION['msg'] = "<div class='alert alert-danger'>Usuário não selecionado!</div>";
+                $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário seleciona um Usuário!</div>";
                 $UrlDestino = URL . 'controle-usuario/index';
                 header("Location: $UrlDestino");
             endif;
 
         else:
-            $_SESSION['msg'] = "<div class='alert alert-danger'>Usuário não selecionado!</div>";
+            $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário seleciona um Usuário!</div>";
             $UrlDestino = URL . 'controle-usuario/index';
             header("Location: $UrlDestino");
         endif;
     }
 
     public function verPerfil() {
+        $ListarMenu = new ModelsMenu();
+        $this->Menu = $ListarMenu->listar();
         $this->UserId = (int) $_SESSION['id'];
         if (!empty($this->UserId)):
             $VerUsuario = new ModelsUsuario();
             $this->Dados = $VerUsuario->visualizar($this->UserId);
             if ($VerUsuario->getResultado()):
-                $CarregarView = new ConfigView('usuario/verPerfil', $this->Dados);
+                $CarregarView = new ConfigView('usuario/verPerfil', $this->Menu, $this->Dados);
                 $CarregarView->renderizar();
             else:
                 $_SESSION['msg'] = "<div class='alert alert-danger'>Area Restrita!</div>";
                 $UrlDestino = URL . 'controle-login/login';
                 header("Location: $UrlDestino");
             endif;
-
         else:
             $_SESSION['msg'] = "<div class='alert alert-danger'>Area Restrita!</div>";
             $UrlDestino = URL . 'controle-login/login';
@@ -88,6 +96,8 @@ class ControleUsuario {
     }
 
     public function editar($UserId = null) {
+        $ListarMenu = new ModelsMenu();
+        $this->Menu = $ListarMenu->listar();
         $this->UserId = (int) $UserId;
         if (!empty($this->UserId)):
             $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -97,7 +107,7 @@ class ControleUsuario {
             $Registros = $EditaUsuario->listarCadastrar();
             //var_dump($Registros);
             $this->Dados = array($Registros[0], $Registros[1], $this->Dados);
-            $CarregarView = new ConfigView("usuario/editarUsuario", $this->Dados);
+            $CarregarView = new ConfigView("usuario/editarUsuario", $this->Menu, $this->Dados);
             $CarregarView->renderizar();
         else:
             $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário selecionar um usuário</div>";
@@ -132,15 +142,17 @@ class ControleUsuario {
     }
 
     public function editarPerfil() {
+        $ListarMenu = new ModelsMenu();
+        $this->Menu = $ListarMenu->listar();
         $this->UserId = (int) $_SESSION['id'];
         if (!empty($this->UserId)):
             $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
             $this->alterarPerfilPrivado();
 
-            $CarregarView = new ConfigView("usuario/editarPerfil", $this->Dados);
+            $CarregarView = new ConfigView("usuario/editarPerfil", $this->Menu, $this->Dados);
             $CarregarView->renderizar();
         else:
-            $_SESSION['msg'] = "<div class='alert alert-danger'>Area restrita!</div>";
+            $_SESSION['msg'] = "<div class='alert alert-danger'>Area restrita</div>";
             $UrlDestino = URL . 'controle-login/login';
             header("Location: $UrlDestino");
         endif;
@@ -153,11 +165,11 @@ class ControleUsuario {
             $EditarUsuario = new ModelsUsuario();
             $EditarUsuario->editar($this->UserId, $this->Dados);
             if (!$EditarUsuario->getResultado()):
-                $_SESSION['msg'] = "<div class='alert alert-danger'>Preencha todos os campos para editar!</div>";
+                $_SESSION['msg'] = "<div class='alert alert-danger'>Para editar necessário preencher todos os campos</div>";
             else:
                 $AtualizarSessao = new ModelsUsuario();
                 $AtualizarSessao->atualizaSessao($this->UserId);
-                $_SESSION['msg'] = "<div class='alert alert-success'>Dados editado com sucesso!</div>";
+                $_SESSION['msg'] = "<div class='alert alert-success'>Dados editado com sucesso</div>";
                 $UrlDestino = URL . 'controle-usuario/ver-perfil';
                 header("Location: $UrlDestino");
             endif;

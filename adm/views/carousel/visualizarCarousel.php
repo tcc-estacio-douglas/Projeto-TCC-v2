@@ -5,7 +5,7 @@
         <a href="<?php echo URL; ?>controle-carousel/apagar/<?php echo $this->Dados[0]['id']; ?>"><button type="button" class="btn btn-sm btn-danger">Apagar</button></a>
     </div>
     <div class="page-header">
-        <h1>Detalhes Carousel</h1>
+        <h1>Detalhes do Carousel</h1>
     </div>
     <?php
     if (isset($_SESSION['msg'])):
@@ -18,29 +18,24 @@
             <dt>ID</dt>
             <dd><?php echo $this->Dados[0]['id']; ?></dd>
 
-            <dt>Titulo</dt>
-            <dd><?php echo $this->Dados[0]['titulo_carousel']; ?></dd>
+            <dt>Titulo carousel</dt>
+            <dd><?php echo $this->Dados[0]['titulo_carousel']; ?></dd>    
 
-            <dt>Link</dt>
-            <dd><?php echo $this->Dados[0]['link']; ?></dd>
-
-            <dt>Situação Carousel</dt>
+            <dt>Situação do Carousel</dt>
             <dd><?php
                 if ($this->Dados[0]['situacao_carousel'] == 1):
                     echo "Habilitado";
                 else:
                     echo "Desabilitado";
                 endif;
-                ?></dd>            
-
-            <dt>Inserido</dt>
-            <dd>
-                <?php
-                if (!empty($this->Dados[0]['created'])):
-                    echo date('d/m/Y H:i:s', strtotime($this->Dados[0]['created']));
-                endif;
                 ?>
             </dd>
+
+            <dt>Página de destino</dt>
+            <dd><?php echo $this->Dados[0]['link']; ?></dd>
+
+            <dt>Inserido</dt>
+            <dd><?php echo date('d/m/Y H:i:s', strtotime($this->Dados[0]['created'])); ?></dd>
 
             <dt>Alterado</dt>
             <dd>
@@ -54,9 +49,9 @@
             <dt>Foto</dt>
             <dd><?php
                 $imagem_carousel = URL . "assets/imagens/carousel/{$this->Dados[0]['id']}/{$this->Dados[0]['foto']}";
-                echo "<img src='$imagem_carousel' height='55' width='200';>";
-                ?></dd>
-
+                echo "<img src='$imagem_carousel' height='55' width='200'";
+                ?>
+            </dd>
         </dl>
         <?php
     else:
@@ -64,5 +59,6 @@
     endif;
     ?>
 </div>
+
 
 

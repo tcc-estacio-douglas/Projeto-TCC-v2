@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Descrição de modelsCarouselHome
+ * Descricao de modelsCarouselHome
  *
- * @copyright (c) 2018, Douglas Caetano Lima
+ * @copyright (c) year, Cesar Szpak - Celke
  */
 class modelsCarouselHome {
     
@@ -12,13 +12,12 @@ class modelsCarouselHome {
     function getResultado() {
         return $this->Resultado;
     }
-    
+
     public function listar() {
         $ListarCarousel = new ModelsRead();
         $ListarCarousel->ExeRead('carousels', 'WHERE situacao_carousel =:situacao_carousel', "situacao_carousel=1");
         $this->Resultado = $ListarCarousel->getResultado();
         return $this->Resultado;
     }
-
 
 }

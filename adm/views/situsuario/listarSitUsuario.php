@@ -1,7 +1,7 @@
 <div class="well well-personalizado">
 
     <div class="page-header">
-        <h1>Listar Situação Usuário</h1>
+        <h1>Listar Situacao Usuário</h1>
     </div>
 
     <?php
@@ -29,13 +29,13 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Situação Usuário</th>
+                    <th>Situação do Usuário</th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                foreach ($this->Dados as $sitUsuario):
+                foreach ($this->Dados as $sitUsuario) :
                     extract($sitUsuario);
                     ?>               
                     <tr>

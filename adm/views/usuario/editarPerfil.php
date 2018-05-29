@@ -2,6 +2,8 @@
 if (isset($this->Dados[0])):
     $valorForm = $this->Dados[0];
 //var_dump($valorForm);
+elseif (isset($this->Dados)):
+    $valorForm = $this->Dados;
 endif;
 ?>
 <div class="well">
@@ -70,11 +72,12 @@ endif;
         ?>">
 
         <div class="form-group">
-            <label class="col-sm-2 control-label">Foto Usuário:</label>
+            <label class="col-sm-2 control-label">Foto:</label>
             <div class="col-sm-10">
                 <input type="file"  name="foto"/>
             </div>
         </div>
+
 
         <input type="hidden" name="modified" value="<?php echo date("Y-m-d H:i:s"); ?>">
 

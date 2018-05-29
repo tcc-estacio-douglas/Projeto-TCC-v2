@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Descrição de ModelsUpload
+ * Descricao de ModelsUpload
  *
- * @copyright (c) 2018, Douglas Caetano Lima
+ * @copyright (c) year, Cesar Szpak - Celke
  */
 class ModelsUpload {
 
@@ -52,17 +52,17 @@ class ModelsUpload {
             case 'image/pjpeg';
                 $this->Imagem = imagecreatefromjpeg($this->Arquivo['tmp_name']);
                 break;
-            case 'image/png';
+            case 'image/png':
             case 'image/x-png';
                 $this->Imagem = imagecreatefrompng($this->Arquivo['tmp_name']);
                 break;
         endswitch;
         if (!$this->Imagem):
             $this->Resultado = false;
-        //echo "tipo de imagem inválida";
+        //echo "Tipo de imagem inválida";
         else:
             $this->Resultado = true;
-        //echo "tipo de imagem válida";
+        //echo "Tipo de imagem válida";
         endif;
     }
 

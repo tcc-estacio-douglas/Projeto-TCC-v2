@@ -7,8 +7,13 @@
  */
 class ControleHome {
     
+    private $Menu;
+
     public function index() {
-        $CarregarView = new ConfigView("home/home");
+        $ListarMenu = new ModelsMenu();
+        $this->Menu = $ListarMenu->listar();
+        
+        $CarregarView = new ConfigView("home/home", $this->Menu);
         $CarregarView->renderizar();
     }
 }

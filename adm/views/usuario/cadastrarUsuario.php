@@ -43,17 +43,15 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">Senha:</label>
             <div class="col-sm-10">
-                <input type="password" class="form-control" name="password" placeholder="Senha">
-            </div>
+                <input type="password"  class="form-control" name="password" placeholder="Senha"></div>
         </div>
         
         <div class="form-group">
-            <label class="col-sm-2 control-label">Foto Usuário:</label>
+            <label class="col-sm-2 control-label">Foto:</label>
             <div class="col-sm-10">
-                <input type="file" name="foto">
+                <input type="file"  name="foto"/>
             </div>
         </div>
-
 
 
         <div class="form-group">
@@ -63,12 +61,12 @@
                     <option value="">Selecione</option>
                     <?php
                     foreach ($niveisAcessos as $nivelAcesso):
-                        extract($nivelAcesso);
-                    if ($valorForm['niveis_acesso_id'] == $id):
-                        $selecionado = "selected";
-                    else:
-                        $selecionado = "";
-                    endif;
+                        extract($nivelAcesso);                                           
+                        if($valorForm['niveis_acesso_id'] == $id):
+                            $selecionado = "selected";
+                        else:
+                            $selecionado = "";
+                        endif;
                         echo "<option value='$id' $selecionado>$nome_niveis_acesso</option>";
                     endforeach;
                     ?>
@@ -83,19 +81,19 @@
                     <option value="">Selecione</option>
                     <?php
                     foreach ($situacaoUsers as $situacaoUser):
-                        extract($situacaoUser);
-                    if ($valorForm['situacoes_user_id'] == $id):
-                        $selecionado = "selected";
-                    else:
-                        $selecionado = "";
-                    endif;
+                        extract($situacaoUser);                                       
+                        if($valorForm['situacoes_user_id'] == $id):
+                            $selecionado = "selected";
+                        else:
+                            $selecionado = "";
+                        endif;
                         echo "<option value='$id' $selecionado>$nome_sit_user</option>";
                     endforeach;
                     ?>
                 </select> 
             </div>
         </div>
-
+        
         <input type="hidden" name="created" value="<?php echo date("Y-m-d H:i:s"); ?>">
         
         <div class="form-group">

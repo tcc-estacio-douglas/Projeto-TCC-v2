@@ -1,13 +1,22 @@
 <?php
 
 /**
- * Descrição de Artigo
+ * Descricao de Empresa
  *
- * @copyright (c) 2018, Douglas Caetano Lima
+ * @copyright (c) year, Cesar Szpak - Celke
  */
 class Empresa {
     
+    private $Dados;
+    private $DadosEmpresa;
+    
     public function index() {
-        echo "pagina do Empresa";
+        $ListarEmpresa = new modelsEmpresaHome();
+        $this->DadosEmpresa = $ListarEmpresa->listar();
+        
+        $this->Dados = array($this->DadosEmpresa);
+        
+        $CarregarView = new ConfigView('empresa/empresa', $this->Dados);
+        $CarregarView->renderizar();
     }
 }

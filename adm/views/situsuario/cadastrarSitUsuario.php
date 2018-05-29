@@ -1,25 +1,23 @@
 <div class="well">
     <div class="page-header">
-        <h1>Cadastrar Situação Usuário</h1>
+        <h1>Cadastrar Situação do Usuário</h1>
     </div>
-    
     <?php
     if (isset($_SESSION['msg'])):
         echo $_SESSION['msg'];
         unset($_SESSION['msg']);
-    endif;    
+    endif;
     ?>
-
     <form name="CadSitUsuario" class="form-horizontal" action="" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label class="col-sm-2 control-label">Nome:</label>
             <div class="col-sm-10">
-                <input type="text"  class="form-control" name="nome_sit_user" placeholder="Nome situação usuário" value="<?php
+                <input type="text"  class="form-control" name="nome_sit_user" placeholder="Nome da Situação do Usuário" value="<?php
                 if (isset($valorForm['nome_sit_user'])): echo $valorForm['nome_sit_user'];
                 endif;
-                ?>"></div>
+                ?>">
+            </div>
         </div>
-
         <input type="hidden" name="created" value="<?php echo date("Y-m-d H:i:s"); ?>">
 
         <div class="form-group">

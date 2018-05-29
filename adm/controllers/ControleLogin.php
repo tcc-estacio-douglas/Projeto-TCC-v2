@@ -7,8 +7,10 @@
  */
 class ControleLogin {
 
+    private $Menu;
     private $Dados;
     private $IdMethodo;
+    private $Chave;
 
     public function login() {
         $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -22,7 +24,7 @@ class ControleLogin {
                 $this->Dados = $Login->getResultado();
 
                 $AtualizarSessao = new ModelsUsuario();
-                $AtualizarSessao->atualizaSessao($this->Dados[0] ['id']);
+                $AtualizarSessao->atualizaSessao($this->Dados[0]['id']);
 
                 $UrlDestino = URL . 'controle-home/index';
                 header("Location: $UrlDestino");
@@ -36,7 +38,7 @@ class ControleLogin {
     }
 
     public function logout() {
-        unset($_SESSION['id'], $_SESSION['name'], $_SESSION['email']);
+        unset($_SESSION['id'], $_SESSION['name'], $_SESSION['email'], $_SESSION['niveis_acesso_id']);
         $_SESSION['msg'] = "<div class='alert alert-success'>Deslogado com sucesso</div>";
         $UrlDestino = URL . 'controle-login/login';
         header("Location: $UrlDestino");
@@ -51,21 +53,52 @@ class ControleLogin {
             $RecuperarSenha = new ModelsRecuperarSenha();
             $RecuperarSenha->recuperarSenha($this->Dados);
             if ($RecuperarSenha->getResultado()):
-                $_SESSION['msg'] = "<div class='alert alert-success'>Dados de recuperação de senha enviado para o e-mail cadastrado!</div>";
+                $_SESSION['msgcad'] = "<div class='alert alert-success'>Enviado dados de recuperação par o seu e-mail!</div>";
                 $UrlDestino = URL . 'controle-login/login';
                 header("Location: $UrlDestino");
             else:
-                $_SESSION['msg'] = "<div class='alert alert-danger'>E-mail não encontrado!</div>";
+                $_SESSION['msg'] = "<div class='alert alert-danger'>E-mail inválido!</div>";
                 $UrlDestino = URL . 'controle-login/recuperar-senha';
                 header("Location: $UrlDestino");
             endif;
         endif;
     }
 
+    public function atualizarSenha($Chave = null) {
+        $this->Chave = $Chave;
+        $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+        $this->atualizarSenhaPrivado();
+
+        $CarregarView = new ConfigView('login/atualizaSenha');
+        $CarregarView->renderizarlogin();
+    }
+
+    public function atualizarSenhaPrivado() {
+        if (!empty($this->Dados['SendAtualSenha'])):
+            unset($this->Dados['SendAtualSenha']);
+            $this->Dados['recuperar_senha'] = $this->Chave;
+            $AtualizarSenha = new ModelsRecuperarSenha();
+            $AtualizarSenha->atualizarSenha($this->Chave, $this->Dados);
+
+            if (!$AtualizarSenha->getResultado()) :
+                $_SESSION['msg'] = "<div class='alert alert-danger'>Erro ao atualizar a senha!</div>";
+            else:
+                $_SESSION['msgcad'] = "<div class='alert alert-success'>Senha atualizada com sucesso!</div>";
+                $UrlDestino = URL . 'controle-login/login';
+                header("Location: $UrlDestino");
+            endif;
+
+        endif;
+    }
+
     public function listarClasseMethodo() {
+        $ListarMenu = new ModelsMenu();
+        $this->Menu = $ListarMenu->listar();
+        
         $Listar = new ModelsLogin();
         $this->Dados = $Listar->listar();
-        $CarregarView = new ConfigView("login/listarClasseMethodo", $this->Dados);
+        $CarregarView = new ConfigView("login/listarClasseMethodo", $this->Menu, $this->Dados);
         $CarregarView->renderizar();
     }
 
@@ -78,13 +111,15 @@ class ControleLogin {
     }
 
     public function editarPermissao($MethodoId = null) {
+        $ListarMenu = new ModelsMenu();
+        $this->Menu = $ListarMenu->listar();
         $this->IdMethodo = (int) $MethodoId;
         //echo "Método: {$this->IdMethodo}<br>";
         if (!empty($this->IdMethodo)):
             $this->Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
             $this->alterarPrivado();
 
-            $CarregarView = new ConfigView("login/editarPermissao", $this->Dados);
+            $CarregarView = new ConfigView("login/editarPermissao", $this->Menu, $this->Dados);
             $CarregarView->renderizar();
         else:
             $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário selecionar um Método</div>";

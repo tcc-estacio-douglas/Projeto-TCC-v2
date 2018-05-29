@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Descrição de ControleCarousel
+ * Descricao de ModelsCarousel
  *
- * @copyright (c) 2018, Douglas Caetano Lima
+ * @copyright (c) year, Cesar Szpak - Celke
  */
 class ModelsCarousel {
 

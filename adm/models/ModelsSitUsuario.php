@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Descrição de ModelsSitUsuario
+ * Descricao de ModelsSitUsuario
  *
- * @copyright (c) 2018, Douglas Caetano Lima
+ * @copyright (c) year, Cesar Szpak - Celke
  */
 class ModelsSitUsuario {
 
@@ -32,7 +32,7 @@ class ModelsSitUsuario {
 
     public function listar($PageId) {
         $Paginacao = new ModelsPaginacao(URL . 'controle-sit-usuario/index/');
-        $Paginacao->condicao($PageId, 10);
+        $Paginacao->condicao($PageId, 20);
         $this->ResultadoPaginacao = $Paginacao->paginacao('situacoes_users');
 
         $Listar = new ModelsRead();
@@ -106,9 +106,9 @@ class ModelsSitUsuario {
             $ApagarSitUsuario = new ModelsDelete();
             $ApagarSitUsuario->ExeDelete('situacoes_users', 'WHERE id =:id', "id={$this->SitUsuarioId}");
             $this->Dados = $ApagarSitUsuario->getResultado();
-            $_SESSION['msgcad'] = "<div class='alert alert-success'>Situação do usuário apagada com sucesso!</div>";
+            $_SESSION['msg'] = "<div class='alert alert-success'>Situação Usuário apagado com sucesso!</div>";
         else:
-            $_SESSION['msgcad'] = "<div class='alert alert-danger'>Situação do usuário não foi apagada!</div>";
+            $_SESSION['msg'] = "<div class='alert alert-danger'>Situação Usuário não foi apagado com sucesso!</div>";
         endif;
     }
 

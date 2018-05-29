@@ -20,7 +20,7 @@ endif;
         unset($_SESSION['msg']);
     endif;
     ?>
-    <form name="EditSitUsuario" class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+    <form name="EditSitUsuario"  class="form-horizontal" action="" method="post" enctype="multipart/form-data">
 
         <input type="hidden" name="id" value="<?php
         if (isset($valorForm['id'])):
@@ -32,7 +32,7 @@ endif;
         <div class="form-group">
             <label class="col-sm-2 control-label">Nome:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="nome_sit_user" placeholder="Nome situação usuário" value="<?php
+                <input type="text" class="form-control" name="nome_sit_user" placeholder="Nome do Situação Usuário" value="<?php
                 if (isset($valorForm['nome_sit_user'])):
                     echo $valorForm['nome_sit_user'];
                 endif;
@@ -44,7 +44,7 @@ endif;
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <input type="submit" class="btn btn-warning" value="Editar" name="SendEditSitUsuario">
+                <input type="submit" class="btn btn-warning" value="Editar" name="SenEditSitUsuario">
             </div>
         </div>
     </form>
