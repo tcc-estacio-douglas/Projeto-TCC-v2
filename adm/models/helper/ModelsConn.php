@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de Conn.class
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 abstract class ModelsConn {
     
     public static $Host = HOST;

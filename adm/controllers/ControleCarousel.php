@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ControleCarousel
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ControleCarousel {
     private $Menu;
     private $Dados;

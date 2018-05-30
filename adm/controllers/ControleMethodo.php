@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ControleMethodo
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ControleMethodo {
     
     private $Menu;

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ControleHome
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ControleHome {
     
     private $Menu;

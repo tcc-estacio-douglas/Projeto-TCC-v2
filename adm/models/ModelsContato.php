@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ModelsContato
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ModelsContato {
     private $Resultado;
     private $ContatoId;

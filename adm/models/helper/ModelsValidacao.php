@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ModelsValidacao
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ModelsValidacao {
 
     private $Nome;

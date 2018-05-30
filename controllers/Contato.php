@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de Contato
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class Contato {
 
     private $Dados;

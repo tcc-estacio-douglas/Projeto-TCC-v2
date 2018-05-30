@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de modelsServicosHome
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class modelsServicosHome {
     
     private $Resultado;

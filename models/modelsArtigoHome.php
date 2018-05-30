@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de modelsArtigoHome
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class modelsArtigoHome {
 
     private $Resultado;

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ModelsMethodo
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ModelsMethodo {
 
     private $Resultado;

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ControleNiveisAcesso
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ControleNiveisAcesso {
 
     private $Menu;

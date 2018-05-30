@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de Home
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class Home {
     private $DadosCarousel;
     private $Dados;

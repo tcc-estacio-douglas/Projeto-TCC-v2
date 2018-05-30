@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de Blog
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class Blog {
     
     private $Dados;

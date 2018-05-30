@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ControleVideo
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ControleVideo {
     
     private $Menu;

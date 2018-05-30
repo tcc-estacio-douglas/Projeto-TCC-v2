@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de Empresa
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class Empresa {
     
     private $Dados;

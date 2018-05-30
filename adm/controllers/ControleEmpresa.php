@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ControleEmpresa
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ControleEmpresa {
     
     private $Menu;

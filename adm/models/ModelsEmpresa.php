@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ModelsEmpresa
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ModelsEmpresa {
     
     private $Resultado;

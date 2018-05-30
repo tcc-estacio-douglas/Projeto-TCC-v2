@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ModelsSitUsuario
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ModelsSitUsuario {
 
     private $Resultado;

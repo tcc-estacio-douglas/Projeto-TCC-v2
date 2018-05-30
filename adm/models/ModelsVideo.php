@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ModelsVideo
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ModelsVideo {
     private $VideoId;
     private $Resultado;

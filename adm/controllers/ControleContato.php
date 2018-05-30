@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ControleContato
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ControleContato {
     
     private $Menu;

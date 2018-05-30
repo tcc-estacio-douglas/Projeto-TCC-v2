@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ModelsLogin
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ModelsLogin {
     
     private $Dados;

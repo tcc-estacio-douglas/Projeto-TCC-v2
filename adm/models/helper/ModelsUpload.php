@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ModelsUpload
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ModelsUpload {
 
     private $Arquivo;

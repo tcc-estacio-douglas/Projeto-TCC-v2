@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ModelsCatArtigo
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ModelsCatArtigo {
 
     private $Resultado;

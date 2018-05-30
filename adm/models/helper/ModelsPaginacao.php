@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ModelsPaginacao
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ModelsPaginacao {
 
     private $Link;

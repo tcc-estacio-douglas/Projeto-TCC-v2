@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de Creat.class
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ModelsUpdate extends ModelsConn {
     
     private $Tabela;

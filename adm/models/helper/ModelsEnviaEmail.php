@@ -2,11 +2,6 @@
 
 require ('assets/lib/PHPMailer/class.phpmailer.php');
 
-/**
- * Descricao de ModelsEnviaEmail
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ModelsEnviaEmail {
 
     private $Dados;

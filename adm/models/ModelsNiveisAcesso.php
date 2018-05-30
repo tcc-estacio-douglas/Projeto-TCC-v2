@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ModelsNiveisAcesso
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ModelsNiveisAcesso {
 
     private $Resultado;

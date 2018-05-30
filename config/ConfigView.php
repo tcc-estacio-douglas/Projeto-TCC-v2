@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ConfigView
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ConfigView {
 
     private $Nome;

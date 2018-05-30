@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ConfigController
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ConfigController {
 
     private $Url;

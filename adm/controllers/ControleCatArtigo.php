@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ControleCatArtigo
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ControleCatArtigo {
     
     private $Menu;

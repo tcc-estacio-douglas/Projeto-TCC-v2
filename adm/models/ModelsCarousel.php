@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ModelsCarousel
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ModelsCarousel {
 
     private $Resultado;

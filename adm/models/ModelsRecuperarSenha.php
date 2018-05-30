@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ModelsRecuperarSenha
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ModelsRecuperarSenha {
 
     private $Dados;

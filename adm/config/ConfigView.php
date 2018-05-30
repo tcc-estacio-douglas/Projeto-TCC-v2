@@ -1,18 +1,15 @@
 <?php
 
-/**
- * Descricao de ConfigView
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ConfigView {
 
     private $Nome;
     private $Dados;
+    private $Menu;
 
-    public function __construct($Nome, array $Dados = null) {
+    public function __construct($Nome, array $Menu = null, array $Dados = null) {
         $this->Nome = (string) $Nome;
         $this->Dados = $Dados;
+        $this->Menu = $Menu;
     }
 
     public function renderizar() {

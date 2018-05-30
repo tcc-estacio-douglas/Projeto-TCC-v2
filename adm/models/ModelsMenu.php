@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ModelsMenu
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ModelsMenu {
 
     private $Resultado;

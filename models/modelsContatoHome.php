@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de modelsContatoHome
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class modelsContatoHome {
 
     private $Dados;

@@ -2,7 +2,7 @@
             <footer class="footer footer-home">
                 <div class="container">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-8">Alguma dúvida? (41) 3503-6170 | atendimento@celke.com.br</div>
+                        <div class="col-xs-12 col-sm-6 col-md-8">Alguma dúvida? (81) 99780-5098 | douglas.cto.lima@gmail.com</div>
                         <div class="col-xs-12 col-sm-6 col-md-4 text-right">
                             <a href="#"><span class="fa fa-facebook icone-header-contato" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Facebook"></span></a>
                             <a href="#"><span class="fa fa-twitter icone-header-contato" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Twiter"></span></a>

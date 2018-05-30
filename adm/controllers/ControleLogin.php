@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ControleLogin
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ControleLogin {
 
     private $Menu;

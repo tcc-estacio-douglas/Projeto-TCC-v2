@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de ControleArtigo
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class ControleArtigo {
     
     private $Menu;

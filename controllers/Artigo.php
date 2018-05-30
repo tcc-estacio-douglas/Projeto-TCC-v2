@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Descricao de Artigo
- *
- * @copyright (c) year, Cesar Szpak - Celke
- */
 class Artigo {
 
     private $Artigo;
