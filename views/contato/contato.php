@@ -23,10 +23,10 @@
         <div class="row">
             <div class="col-sm-5">
                 <h2>Empresa</h2>
-                <p>Entre em contato conosco e entraremos em contato com você dentro de 24 horas.</p>
-                <p><span class="glyphicon glyphicon-map-marker"></span> Curitiba, PR</p>
-                <p><span class="glyphicon glyphicon-phone"></span> (41) 3503-6170</p>
-                <p><span class="glyphicon glyphicon-envelope"></span> atendimento@celke.com.br</p>
+                <p>Entre em contato conosco para divulgar suas noticias.</p>
+                <p><span class="glyphicon glyphicon-map-marker"></span> Recife, PE</p>
+                <p><span class="glyphicon glyphicon-phone"></span> (81) 99780-5098</p>
+                <p><span class="glyphicon glyphicon-envelope"></span> douglas.cto.lima@gmail.com</p>
 
             </div>
             <div class="col-sm-7">

@@ -23,7 +23,7 @@ class ControleVideo {
                 header("Location: $UrlDestino");
             endif;
         else:
-            $_SESSION['msg'] = "<div class='alert alert-danger'>Necessário seleciona um Vídeo!</div>";
+            //$_SESSION['msg'] = "<div class='alert alert-danger'>Necessário seleciona um Vídeo!</div>";
             $UrlDestino = URL . 'controle-video/visualizar/1';
             header("Location: $UrlDestino");
         endif;

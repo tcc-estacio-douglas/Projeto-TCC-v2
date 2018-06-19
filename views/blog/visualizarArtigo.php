@@ -28,19 +28,14 @@ endif;
         </div>
         <div class="col-sm-4">
             <div class="well">
-                <p>Sobre Mim</p>
-                <p>Integer augue nisl, pharetra ut dapibus at, hendrerit id dui. Nunc hendrerit iaculis tortor ac tincidunt. Pellentesque quis placerat neque, eget consequat ligula. Integer in urna viverra, luctus magna id, sagittis erat. Praesent turpis ipsum, varius in est quis, dapibus vehicula sem. Donec imperdiet pellentesque neque, sit amet accumsan odio ultrices ut.</p>
+                <p>Curiosidade</p>
+                <p>Muitas companhias de software, redes sociais e desenvolvedores de aplicativos recorrem à Nova Zelândia para testar e aperfeiçoar seus produtos e serviços.</p> 
+                
+                <p>O motivo? O país da Oceania é considerado isolado o suficiente para evitar vazamentos, com o benefício de que a população fala inglês, tem gostos e poder econômico semelhantes aos ocidentais.</p>
+                
+                <p>Lá, é possível descobrir e consertar bugs antes do lançamento, inclusive testando o suporte para um grande número de usuários. Microsoft, Facebook e Yahoo, por exemplo, já fizeram testes no mercado neozelandês.</p>
             </div>
-            <div class="well">
-                <?php $imagem_propaganda = URL . "assets/imagens/site/curso.png"; ?>
-                <p>
-                    <a href="http://celke.com.br/"><img class="img-responsive" src="<?php echo $imagem_propaganda; ?>" alt="Curso de PHP"></a>
-                </p>
-            </div>
-
-            <div class="well">
-                <p>Modelo</p>
-            </div> 
+            
         </div>
     </div>
     <hr>
